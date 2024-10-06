@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "./Header";
 import {post} from "axios";
 
 const styles = {
@@ -26,7 +25,6 @@ const styles = {
 function SignUp(porps) {
     return (
         <div>
-            <Header/>
             <div align="center">
                 <h3>회원가입</h3>
                 <form>
