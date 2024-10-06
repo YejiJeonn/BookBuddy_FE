@@ -41,6 +41,10 @@ const styles = {
         width: 200,
         height: 30,
     },
+    titleName: {
+      textDecoration: 'none',
+      color: 'black',
+    },
 };
 
 function Header(props) {
@@ -62,7 +66,9 @@ function Header(props) {
             {/*    style={styles.btnImg}*/}
             {/*    onClick={imageButtonClicked} // onclick -> onClick*/}
             {/*/>*/}
-            <h1 style={styles.title}>Book Buddy</h1>
+            <a href="#" style={styles.titleName}>
+                <h1 style={styles.title}>Book Buddy</h1>
+            </a>
 
             <div style={styles.search}>
                 <input
