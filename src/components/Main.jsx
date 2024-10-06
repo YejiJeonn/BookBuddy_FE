@@ -4,7 +4,7 @@ import Header from "./Header";
 function Main(porps) {
     return (
         <div>
-            <Header/>
+
         </div>
     )
 }

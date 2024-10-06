@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "./Header";
 
 const styles = {
     loginBlock: {
@@ -31,7 +30,6 @@ const styles = {
 function Login() {
     return (
         <div>
-            <Header /> {/* 헤더 추가 */}
             <div align="center">
                 <h3>로그인</h3>
                 <form>
