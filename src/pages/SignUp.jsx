@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios, {get, post} from "axios";
+import duplicateCheck from "../components/DuplicateCheck";
 import main from "./Main";
 
 const styles = {
@@ -26,35 +27,79 @@ const styles = {
 function SignUp() {
 
     // spring boot로 Input 데이터 보내기
-    const [id, setID] = useState('');
-    const [pw, setPW] = useState('');
-    const [c_pw, setCPW] = useState('');
-    const [username, setUsername] = useState('');
+    const [userId, setUserId] = useState('');
+    const [password, setPassword] = useState('');
+    const [checkPassword, setCPW] = useState('');
+    const [nickName, setNickName] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [birth, setBirth] = useState('');
+
+    const [status, setStatus] = useState(true);
+    const [idDuplicate, setIdDuplicate] = useState(false);
+    const [pwDuplicate, setPwDuplicate] = useState('');
 
     const handleChange = (event) => {
         const {name, value} = event.target;
 
         // 필드 이름에 따라 상태를 업데이트
-        if (name === "id") setID(value);
-        if (name === "pw") setPW(value);
+        if (name === "id") setUserId(value);
+        if (name === "pw") setPassword(value);
         if (name === "c_pw") setCPW(value);
-        if (name === "username") setUsername(value);
+        if (name === "username") setNickName(value);
         if (name === "name") setName(value);
         if (name === "email") setEmail(value);
         if (name === "birthday") setBirth(value);
     };
 
+    const handleDuplicate = () => {
+        axios.get("http://localhost:8080/users/check-id"), {
+            params: {}
+        }
+            .then(response => {
+                setIdDuplicate(response.data);
+
+                if(idDuplicate){
+                    alert("중복된 아이디");
+                } else{
+                    alert("사용 가능");
+                }
+            }).catch(error => {
+                alert("중복확인 요청 중 오류 발생");
+        });
+    };
+
+
+    // 비밀번호 일치 여부 확인
+    useEffect(() => {
+        if (checkPassword === "") {
+            setPwDuplicate(""); // 초기 상태
+        } else if(password === checkPassword){
+            setPwDuplicate("✅");
+        } else {
+            setPwDuplicate("불일치");
+        }
+    }, [password, checkPassword]);
+
+    // 최종 회원가입 상태
+    useEffect(() => {
+
+    }, []);
+
     // 폼 제출 시 데이터 전송
     const handleSubmit = (event) => {
+
+        if(!status){
+            alert("기입한 정보를 다시 확인해주세요.");
+            return;
+        }
+
         event.preventDefault();  // 폼 제출 시 새로고침 방지
         const data = {
-            id: id,
-            pw: pw,
-            c_pw: c_pw,
-            username: username,
+            id: userId,
+            pw: password,
+            c_pw: checkPassword,
+            username: nickName,
             name: name,
             email: email,
             birth: birth,
@@ -82,7 +127,7 @@ function SignUp() {
                             <tr align="center">
                                 <td align="center">ID &nbsp;</td>
                                 <td>
-                                    <input type="text" name="id" value={id} onChange={handleChange} size="30"/>
+                                    <input type="text" name="id" value={userId} onChange={handleChange} size="30"/>
                                 </td>
                                 <td>
                                     <script src="DuplicateCheck.js"/>
@@ -96,9 +141,9 @@ function SignUp() {
                             <tr align="center">
                                 <td align="center">PW &nbsp;</td>
                                 <td>
-                                    <input type="password" name="pw" value={pw} onChange={handleChange} size="30"/>
+                                    <input type="password" name="pw" value={password} onChange={handleChange} size="30"/>
                                 </td>
-                                <td>✅</td>
+                                <td></td>
                             </tr>
 
                             <tr height="5px">
@@ -108,10 +153,10 @@ function SignUp() {
                             <tr align="center">
                                 <td align="center">PW 확인 &nbsp;</td>
                                 <td>
-                                    <input type="password" name="c_pw" value={c_pw} onChange={handleChange}
+                                    <input type="password" name="c_pw" value={checkPassword} onChange={handleChange}
                                            size="30"/>
                                 </td>
-                                <td>✅</td>
+                                <td>{pwDuplicate}</td>
                             </tr>
 
                             <tr>
@@ -124,7 +169,7 @@ function SignUp() {
                             <tr align="center">
                                 <td align="center">닉네임 &nbsp;</td>
                                 <td>
-                                    <input type="text" name="username" value={username} onChange={handleChange}
+                                    <input type="text" name="username" value={nickName} onChange={handleChange}
                                            size="30"/>
                                 </td>
                                 <td>
