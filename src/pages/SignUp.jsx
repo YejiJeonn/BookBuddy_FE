@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axios, {get, post} from "axios";
-import duplicateCheck from "../components/DuplicateCheck";
-import main from "./Main";
+import axios from "axios";
 
 const styles = {
     loginBlock: {
@@ -29,46 +27,50 @@ function SignUp() {
     // spring boot로 Input 데이터 보내기
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
-    const [checkPassword, setCPW] = useState('');
+    const [checkPassword, setCheckPassword] = useState('');
     const [nickName, setNickName] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [birth, setBirth] = useState('');
 
     const [status, setStatus] = useState(true);
-    const [idDuplicate, setIdDuplicate] = useState(false);
     const [pwDuplicate, setPwDuplicate] = useState('');
 
+    // input에 값 입력 시 해당 변수 값 변경
     const handleChange = (event) => {
         const {name, value} = event.target;
 
         // 필드 이름에 따라 상태를 업데이트
         if (name === "id") setUserId(value);
         if (name === "pw") setPassword(value);
-        if (name === "c_pw") setCPW(value);
+        if (name === "checkPassword") setCheckPassword(value);
         if (name === "username") setNickName(value);
         if (name === "name") setName(value);
         if (name === "email") setEmail(value);
         if (name === "birthday") setBirth(value);
     };
 
-    const handleDuplicate = () => {
-        axios.get("http://localhost:8080/users/check-id"), {
-            params: {}
-        }
+    // 아이디 중복값 검사
+    const handleIdDuplicate = () => {
+        axios.post("http://localhost:8080/users/check-id", null, {
+            params: { userId } // 쿼리 파라미터로 userId 전달
+        })
             .then(response => {
-                setIdDuplicate(response.data);
+                // setIdDuplicate(response.data);
 
-                if(idDuplicate){
+                if (response.data) {
                     alert("중복된 아이디");
-                } else{
-                    alert("사용 가능");
+                    setStatus(false);
+                } else {
+                    alert(userId + " 사용 가능");
+                    setStatus(true);
                 }
-            }).catch(error => {
+            })
+            .catch(error => {
+                console.error("중복확인 요청 중 오류 발생:", error);
                 alert("중복확인 요청 중 오류 발생");
-        });
+            });
     };
-
 
     // 비밀번호 일치 여부 확인
     useEffect(() => {
@@ -81,10 +83,27 @@ function SignUp() {
         }
     }, [password, checkPassword]);
 
-    // 최종 회원가입 상태
-    useEffect(() => {
+    // 닉네임 일치 여부 확인
+    const handleNickNameDuplicate = () => {
+        axios.post("http://localhost:8080/users/check-nickname", null, {
+            params: { nickName } // 쿼리 파라미터로 userId 전달
+        })
+            .then(response => {
+                // setNickNameDuplicate(response.data);
 
-    }, []);
+                if (response.data) {
+                    alert("중복된 닉네임");
+                    setStatus(false);
+                } else {
+                    alert(nickName + " 사용 가능");
+                    setStatus(true);
+                }
+            })
+            .catch(error => {
+                console.error("중복확인 요청 중 오류 발생:", error);
+                alert("중복확인 요청 중 오류 발생");
+            });
+    };
 
     // 폼 제출 시 데이터 전송
     const handleSubmit = (event) => {
@@ -94,24 +113,28 @@ function SignUp() {
             return;
         }
 
+        if(!password){
+            alert("비밀번호를 입력하세요.");
+            return;
+        }
+
         event.preventDefault();  // 폼 제출 시 새로고침 방지
         const data = {
-            id: userId,
-            pw: password,
-            c_pw: checkPassword,
-            username: nickName,
+            userId : userId,
+            password: password,
+            nickName: nickName,
             name: name,
             email: email,
             birth: birth,
         };
 
-        axios.post('http://localhost:8080/api/submit', data)
-            .then(response => {
-                console.log('Data sent successfully:', response.data);
-            })
-            .catch(error => {
-                console.error('Error sending data:', error);
-            });
+        axios.post('http://localhost:8080/users/signup', data)
+        .then(response => {
+            console.log('Data sent successfully:', response.data);
+        })
+        .catch(error => {
+            console.error('Error sending data:', error);
+        });
     };
 
 
@@ -130,7 +153,7 @@ function SignUp() {
                                     <input type="text" name="id" value={userId} onChange={handleChange} size="30"/>
                                 </td>
                                 <td>
-                                    <script src="DuplicateCheck.js"/>
+                                    <button type="button" onClick={handleIdDuplicate}>중복확인</button>
                                 </td>
                             </tr>
 
@@ -153,7 +176,7 @@ function SignUp() {
                             <tr align="center">
                                 <td align="center">PW 확인 &nbsp;</td>
                                 <td>
-                                    <input type="password" name="c_pw" value={checkPassword} onChange={handleChange}
+                                    <input type="password" name="checkPassword" value={checkPassword} onChange={handleChange}
                                            size="30"/>
                                 </td>
                                 <td>{pwDuplicate}</td>
@@ -173,7 +196,7 @@ function SignUp() {
                                            size="30"/>
                                 </td>
                                 <td>
-                                    <script src="DuplicateCheck.js"/>
+                                    <button type="button" onClick={handleNickNameDuplicate}>중복확인</button>
                                 </td>
                             </tr>
 
