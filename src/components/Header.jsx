@@ -66,7 +66,7 @@ function Header(props) {
             {/*    style={styles.btnImg}*/}
             {/*    onClick={imageButtonClicked} // onclick -> onClick*/}
             {/*/>*/}
-            <a href="#" style={styles.titleName}>
+            <a href="Main.jsx" style={styles.titleName}>
                 <h1 style={styles.title}>Book Buddy</h1>
             </a>
 
