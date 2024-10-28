@@ -1,19 +1,16 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
+import Main from "./pages/Main";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import {BrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
 
 function App() {
-  const [hello, setHello] = useState('');
-
-  useEffect(() => {
-    axios.get('http://localhost:8080/api/test')
-        .then((res) => {
-          setHello(res.data);
-        })
-  }, []);
   return (
-      <div className="App">
-        백엔드 데이터 : {hello}
-      </div>
+      // <RouterProvider router={root}></RouterProvider>
+      <Routes>
+          <Route path="/" element={<Main/>} />
+          <Route path="/signup" element={<SignUp/>} />
+          <Route path="/login" element={<Login/>} />
+      </Routes>
   );
 }
 
