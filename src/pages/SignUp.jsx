@@ -130,9 +130,11 @@ function SignUp() {
 
         axios.post('http://localhost:8080/users/signup', data)
         .then(response => {
+            alert("회원가입 성공");
             console.log('Data sent successfully:', response.data);
         })
         .catch(error => {
+            alert("회원가입 실패");
             console.error('Error sending data:', error);
         });
     };

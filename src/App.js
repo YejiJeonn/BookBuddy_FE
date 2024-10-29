@@ -1,16 +1,28 @@
-import Main from "./pages/Main";
+import Main from "./pages/MainPage";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import {BrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
+import {Route, RouterProvider} from "react-router-dom";
+import root from "./router/root";
+import MainPage from "./pages/MainPage";
+import Header from "./components/Header";
+import BookSearch from "./pages/BookSearch";
+
 
 function App() {
   return (
-      // <RouterProvider router={root}></RouterProvider>
-      <Routes>
-          <Route path="/" element={<Main/>} />
-          <Route path="/signup" element={<SignUp/>} />
-          <Route path="/login" element={<Login/>} />
-      </Routes>
+      // <RouterProvider router={root}/>
+      // <Routes>
+      //     <Route path="/" element={<MainPage/>} />
+      //     <Route path="/signup" element={<SignUp/>} />
+      //     <Route path="/login" element={<Login/>} />
+      // </Routes>
+
+      <div>
+          <Header/>
+          {/*<SignUp/>*/}
+          <Login/>
+          {/*<BookSearch/>*/}
+      </div>
   );
 }
 
