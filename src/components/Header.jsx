@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import BookSearch from "../pages/BookSearch";
 
 
 const styles = {
@@ -71,12 +72,14 @@ function Header(props) {
             </a>
 
             <div style={styles.search}>
-                <input
-                    type="text"
-                    name="bookTitle"
-                    style={styles.txtSearch}
-                    placeholder="검색할 도서 제목"
-                />
+                {/*<input*/}
+                {/*    type="text"*/}
+                {/*    name="bookTitle"*/}
+                {/*    style={styles.txtSearch}*/}
+                {/*    placeholder="검색할 도서 제목"*/}
+                {/*/>*/}
+
+                <BookSearch/>
             </div>
         </div>
     );
