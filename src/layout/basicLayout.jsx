@@ -1,11 +1,17 @@
-import header from "../components/Header";
+import Header from "../components/Header";
 
-const BasicLayout = (props) => {
+const BasicLayout = ({children}) => {
     return(
-        <div>
-            <header/>
-        </div>
-    )
+        <>
+            <Header/>
+            <div>
+                <main> {children} </main>
+                <aside>
+                    <h1> Sidebar </h1>
+                </aside>
+            </div>
+        </>
+    );
 }
 
 export default BasicLayout

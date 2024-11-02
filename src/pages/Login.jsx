@@ -34,6 +34,14 @@ function Login (){
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
 
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+
+        // 필드 이름에 따라 상태를 업데이트
+        if (name === "id") setUserId(value);
+        if (name === "pw") setPassword(value);
+    };
+
     // 입력 정보 비교 후 로그인 여부 출력
     const handleSubmit = async (event) => {
         event.preventDefault();  // 폼 제출 시 새로고침 방지
@@ -43,24 +51,24 @@ function Login (){
             password : password,
         };
 
-        try{
-            const response = await axios.post('http://localhost:8080/users/login', data);
-            alert(response.data);
-            console.log("Login Success");
-        }catch (error) {
-            alert("로그인 실패: " + error.response.data);
-            console.error("Error during login: ", error);
-        }
-        // axios.post('http://localhost:8080/users/login', data)
-        //     .then(response => {
-        //         alert("로그인 성공");
-        //         console.log('Data sent successfully:', response.data);
-        //     })
-        //     .catch(error => {
-        //         alert("로그인 실패");
-        //         console.error('Error sending data:', error);
-        //     });
-    }
+        // try{
+        //     const response = await axios.post('http://localhost:8080/users/login', data);
+        //     alert(response.data);
+        //     console.log("Login Success");
+        // }catch (error) {
+        //     alert("로그인 실패: " + error.response.data);
+        //     console.error("Error during login: ", error);
+        // }
+        axios.post('http://localhost:8080/users/login', data)
+            .then(response => {
+                alert(response.data);
+                // console.log('Data sent successfully:', response.data);
+            })
+            .catch(error => {
+                alert("로그인 실패");
+                console.error('Error sending data:', error);
+            });
+    };
 
     // const navigate = useNavigate();
     //
@@ -78,14 +86,14 @@ function Login (){
         <div>
             <div align="center">
                 <h3>로그인</h3>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div style={styles.loginBlock}>
                         <table>
                             <tbody>
                             <tr align="center">
                                 <td align="center">ID &nbsp;</td>
                                 <td>
-                                    <input type="text" name="id" size="30" />
+                                    <input type="text" name="id" size="30" onChange={handleChange} />
                                 </td>
                             </tr>
                             <tr height="5px">
@@ -94,7 +102,7 @@ function Login (){
                             <tr align="center">
                                 <td align="center">PW &nbsp;</td>
                                 <td>
-                                    <input type="password" name="pw" size="30" />
+                                    <input type="password" name="pw" size="30" onChange={handleChange}/>
                                 </td>
                             </tr>
                             <tr>
