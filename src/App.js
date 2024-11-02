@@ -1,29 +1,28 @@
-import Main from "./pages/MainPage";
+import MainPage from "./pages/MainPage";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import {Route, RouterProvider} from "react-router-dom";
-import root from "./router/root";
-import MainPage from "./pages/MainPage";
-import Header from "./components/Header";
-import BookSearch from "./pages/BookSearch";
+import MyPage from "./pages/MyPage";
+import Library from "./pages/Library";
+import ReadHistory from "./pages/ReadHistory";
+import Timer from "./pages/Timer";
+import {Route, Routes} from 'react-router-dom';
+import React from "react";
 
 
 function App() {
-  return (
-      // <RouterProvider router={root}/>
-      // <Routes>
-      //     <Route path="/" element={<MainPage/>} />
-      //     <Route path="/signup" element={<SignUp/>} />
-      //     <Route path="/login" element={<Login/>} />
-      // </Routes>
-
-      <div>
-          <Header/>
-          {/*<SignUp/>*/}
-          <Login/>
-          {/*<BookSearch/>*/}
-      </div>
-  );
+    return (
+        <div className="App">
+            <Routes>
+                <Route path="/" element={<MainPage/>}/>
+                <Route path="/signup" element={<SignUp/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/profile" element={<MyPage/>}/>
+                <Route path="/library" element={<Library/>}/>
+                <Route path="/reading-history" element={<ReadHistory/>}/>
+                <Route path="/timer" element={<Timer/>}/>
+            </Routes>
+        </div>
+    );
 }
 
 export default App;

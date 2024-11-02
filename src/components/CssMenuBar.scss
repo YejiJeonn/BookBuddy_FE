@@ -1,0 +1,56 @@
+// 버튼 기본 스타일
+.btn-img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  left: 10px;
+  background: no-repeat center center;
+  background-size: cover;
+  border: none;
+  padding: 0;
+  transition: transform 0.2s;
+  position: relative;
+
+  // hover 상태 스타일
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.menuWrapper {
+  position: relative;
+}
+
+// 메뉴 아이콘을 기준으로 menu lists가 배치되도록 position:absolute를 지정했습니다
+.menuLists {
+  position: absolute; // 화면 왼쪽에 고정
+  top: 27px;
+  left: 0;
+  height: 100vh; // 화면 전체 높이
+  width: 200px;
+  background-color: white;
+  transition: transform 0.3s ease;
+  transform: translateX(-60px); // 초기 위치 설정 (숨김)
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+
+  &.show {
+    transform: translateX(0);
+  }
+
+  .menuList {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .menuLine {
+    border: 1px solid lightgray;
+    margin: 0;
+  }
+}

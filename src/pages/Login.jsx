@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const styles = {
     loginBlock: {
@@ -28,11 +29,12 @@ const styles = {
     },
 };
 
-function Login (){
+function Login() {
 
     // param 선언
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -47,21 +49,14 @@ function Login (){
         event.preventDefault();  // 폼 제출 시 새로고침 방지
 
         const data = {
-            userId : userId,
-            password : password,
+            userId: userId,
+            password: password,
         };
 
-        // try{
-        //     const response = await axios.post('http://localhost:8080/users/login', data);
-        //     alert(response.data);
-        //     console.log("Login Success");
-        // }catch (error) {
-        //     alert("로그인 실패: " + error.response.data);
-        //     console.error("Error during login: ", error);
-        // }
         axios.post('http://localhost:8080/users/login', data)
             .then(response => {
                 alert(response.data);
+                navigate('/');
                 // console.log('Data sent successfully:', response.data);
             })
             .catch(error => {
@@ -70,17 +65,9 @@ function Login (){
             });
     };
 
-    // const navigate = useNavigate();
-    //
-    // const handleLogin = () => {
-    //     navigate('/');
-    // };
-    // onClick={handleLogin}
-    //
-    // const handleSignUp = () => {
-    //     navigate('/signup');
-    // };
-    // onClick={handleSignUp}
+    const handleSignUp = () => {
+        navigate('/signup');
+    };
 
     return (
         <div>
@@ -93,7 +80,7 @@ function Login (){
                             <tr align="center">
                                 <td align="center">ID &nbsp;</td>
                                 <td>
-                                    <input type="text" name="id" size="30" onChange={handleChange} />
+                                    <input type="text" name="id" size="30" onChange={handleChange}/>
                                 </td>
                             </tr>
                             <tr height="5px">
@@ -113,7 +100,7 @@ function Login (){
                             </tr>
                             <tr align="center">
                                 <td colSpan="2">
-                                    <button type="submit" className="btnSignin" style={styles.btnSignin} > 로그인 </button>
+                                    <button type="submit" className="btnSignin" style={styles.btnSignin}> 로그인</button>
                                 </td>
                             </tr>
                             <tr height="5px">
@@ -121,7 +108,9 @@ function Login (){
                             </tr>
                             <tr align="center">
                                 <td colSpan="2">
-                                    <button type="button" className="btnSignup" style={styles.btnSignup} > 회원가입 </button>
+                                    <button type="button" className="btnSignup" style={styles.btnSignup}
+                                            onClick={handleSignUp}> 회원가입
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>
