@@ -1,14 +1,11 @@
 import React from "react";
-import {Link} from "react-router-dom";
-import BasicLayout from "../layout/basicLayout";
 
 const MainPage = () => {
-    return(
+    return (
         // <BasicLayout>
-            <div>
-                <h1> 메인 페이지 </h1>
-                <Link to="/signup">Sign Up</Link>
-            </div>
+        <div>
+            <h1> 메인 페이지 </h1>
+        </div>
         // </BasicLayout>
     )
 }

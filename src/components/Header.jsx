@@ -1,5 +1,6 @@
-import React,{useState} from "react";
-import BookSearch from "../pages/BookSearch";
+import React from "react";
+import BookSearch from "./BookSearch";
+import MenuBar from "./MenuBar";
 
 
 const styles = {
@@ -13,24 +14,13 @@ const styles = {
         position: 'relative', // position: relative -> position: 'relative'
     },
 
-    btnImg: {
-        width: 30,
-        height: 30,
-        position: 'absolute', // position: absolute -> position: 'absolute'
-        left: 10,
-        background: `url('./icMenu.png') no-repeat center center`, // background -> background: `url('./icMenu.png') no-repeat center center`
-        backgroundSize: 'cover', // background-size -> backgroundSize: 'cover'
-        border: 'none', // border: none -> border: 'none'
-        cursor: 'pointer', // cursor: pointer -> cursor: 'pointer'
-        padding: 0,
-    },
-
-    btnImgHover: {
-        transform: 'scale(1.1)',
-    },
-
     title: {
         margin: 0,
+    },
+
+    menuBar: {
+        position: 'absolute',
+        left: 10,
     },
 
     search: {
@@ -43,42 +33,24 @@ const styles = {
         height: 30,
     },
     titleName: {
-      textDecoration: 'none',
-      color: 'black',
-    },
+        textDecoration: 'none',
+        color: 'black',
+    }
 };
 
 function Header(props) {
-    const [isHovered, setIsHovered] = useState(false);
-
-    const imageButtonClicked = () => {
-        console.log("버튼 클릭됨");
-    };
 
     return (
         <div style={styles.header}>
-            <button
-                style={isHovered ? {...styles.btnImg, ...styles.btnImgHover} : styles.btnImg}
-                onClick={imageButtonClicked}
-                onMouseEnter={() => setIsHovered(true)} // 마우스를 버튼 위에 올렸을 때
-                onMouseLeave={() => setIsHovered(false)} // 마우스를 버튼에서 뗐을 때
-            />
-            {/*<button*/}
-            {/*    style={styles.btnImg}*/}
-            {/*    onClick={imageButtonClicked} // onclick -> onClick*/}
-            {/*/>*/}
-            <a href="Main.jsx" style={styles.titleName}>
+            <div style={styles.menuBar}>
+                <MenuBar/>
+            </div>
+
+            <a href="/" style={styles.titleName}>
                 <h1 style={styles.title}>Book Buddy</h1>
             </a>
 
             <div style={styles.search}>
-                {/*<input*/}
-                {/*    type="text"*/}
-                {/*    name="bookTitle"*/}
-                {/*    style={styles.txtSearch}*/}
-                {/*    placeholder="검색할 도서 제목"*/}
-                {/*/>*/}
-
                 <BookSearch/>
             </div>
         </div>
