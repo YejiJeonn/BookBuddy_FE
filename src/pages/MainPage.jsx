@@ -1,10 +1,11 @@
 import React from "react";
+import BookList from "./BookList";
 
 const MainPage = () => {
     return (
         // <BasicLayout>
         <div>
-            <h1> 메인 페이지 </h1>
+            <BookList/>
         </div>
         // </BasicLayout>
     )

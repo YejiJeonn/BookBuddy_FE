@@ -5,8 +5,10 @@ import MyPage from "./pages/MyPage";
 import Library from "./pages/Library";
 import ReadHistory from "./pages/ReadHistory";
 import Timer from "./pages/Timer";
+import BookDetail from "./components/BookDetail";
 import {Route, Routes} from 'react-router-dom';
 import React from "react";
+import CategoryPage from "./pages/CategoryPage";
 
 
 function App() {
@@ -20,6 +22,13 @@ function App() {
                 <Route path="/library" element={<Library/>}/>
                 <Route path="/reading-history" element={<ReadHistory/>}/>
                 <Route path="/timer" element={<Timer/>}/>
+
+                <Route path="/book/:id" element={<BookDetail/>}/>
+                <Route path="/category/:categoryId" element={<CategoryPage/>}/>
+                {/*<Route path="/category/ItemNewAll" element={<BLItemNewAll/>}/>*/}
+                {/*<Route path="/category/ItemNewSpecial" element={<BLItemNewSpecial/>}/>*/}
+                {/*<Route path="/category/ItemEditorChoice" element={<BLItemEditorChoice/>}/>*/}
+                {/*<Route path="/category/bestseller" element={<BLBestseller/>}/>*/}
             </Routes>
         </div>
     );
