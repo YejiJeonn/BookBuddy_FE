@@ -9,18 +9,12 @@ const TimerPage = () => {
         setIsStopwatchRunning,
         stopwatchTime,
         setStopwatchTime,
-        isTimerRunning,
-        setIsTimerRunning,
-        timerTime,
-        setTimerTime,
-        userInput,
-        setUserInput,
-        isTimerInitialized,
-        setIsTimerInitialized,
     } = useTimer();
 
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
+    const [bookTitle, setBookTitle] = useState("");
+
 
     const formatTime = (time) => {
         const minutes = Math.floor(time / 60000);
@@ -46,18 +40,25 @@ const TimerPage = () => {
     };
 
     // 저장 버튼 클릭 시 읽기 시간 저장
+    // const saveReadingTime = async () => {
+    //     const userId = 1; // 사용자 ID (로그인 상태라면 실제 ID로 대체)
+    //     const readingTime = stopwatchTime || (timerTime - userInput * 60000); // 경과 시간
+    //     const startDate = startTime ? startTime.toISOString() : null;
+    //     const endDate = endTime ? endTime.toISOString() : null;
+
     const saveReadingTime = async () => {
-        const userId = 1; // 사용자 ID (로그인 상태라면 실제 ID로 대체)
-        const readingTime = stopwatchTime || (timerTime - userInput * 60000); // 경과 시간
+        const userId = 1;  // 예제용 사용자 ID
         const startDate = startTime ? startTime.toISOString() : null;
         const endDate = endTime ? endTime.toISOString() : null;
+        const readingTime = stopwatchTime;
 
         try {
             await axios.post("http://localhost:8080/api/save-reading-time", {
                 userId,
-                startDate,
-                endDate,
+                startTime: startDate,
+                endTime: endDate,
                 readingTime,
+                bookTitle
             });
             alert("독서 시간이 저장되었습니다!");
         } catch (error) {
@@ -83,6 +84,13 @@ const TimerPage = () => {
             <div className="timerDisplay">
                 <span>{formatTime(stopwatchTime)}</span>
             </div>
+            <input
+                type="text"
+                value={bookTitle}
+                onChange={(e) => setBookTitle(e.target.value)}
+                placeholder="책 제목을 입력하세요"
+                style={{marginBottom: "10px", padding: "5px"}}
+            />
             <button onClick={toggleStopwatch} className="btn">
                 {!isStopwatchRunning ? 'Start' : 'Stop'}
             </button>
@@ -90,7 +98,6 @@ const TimerPage = () => {
                 Reset
             </button>
 
-            {/* 저장 버튼 추가 */}
             <div style={{marginTop: '30px'}}>
                 <button onClick={saveReadingTime} className="btnSave">
                     저장

@@ -6,11 +6,16 @@ import BLBestseller from "../components/BLBestseller";
 function BookList() {
     return (
         <div>
-            <BLItemNewAll/>
+            <BLBestseller/>
+
+            <hr/>
 
             <BLItemNewSpecial/>
 
-            <BLBestseller/>
+            <hr/>
+            
+            <BLItemNewAll/>
+
         </div>
     );
 }

@@ -11,7 +11,7 @@ const BLItemNewSpecial = () => {
 
     useEffect(() => {
         fetchProducts();
-    }, []);
+    },);
 
     // Spring Boot API에서 상품 데이터 가져오기
     const fetchProducts = async () => {
@@ -19,7 +19,8 @@ const BLItemNewSpecial = () => {
             const response = await axios.get("http://localhost:8080/api/aladin-books", {
                 params: {
                     queryType: category.id, // 카테고리 예시: Bestseller
-                    maxResults: 5            // 가져올 최대 상품 수
+                    maxResults: 5,            // 가져올 최대 상품 수
+                    start: 1
                 }
             });
 
