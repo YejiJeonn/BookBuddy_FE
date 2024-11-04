@@ -16,11 +16,48 @@
   color: black;
 }
 
-.bgBookList {
+.headerContainer {
   display: flex;
-  flex-wrap: wrap;
-  //cursor: pointer;
+  justify-content: space-between; /* 제목과 버튼을 양 끝에 배치 */
+  align-items: center; /* 세로 정렬 중앙 정렬 */
+  //margin-bottom: 10px; /* 아래 여백 추가 */
+}
+
+.btnMore {
+  color: blue;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}
+
+
+.bookListContainer {
+  display: flex;
+  flex-direction: row; // 기본값: 가로 정렬
+  flex-wrap: nowrap; // 항목이 한 줄에 유지되도록 설정
+  overflow-x: auto; // 한 줄에 맞지 않으면 가로 스크롤 생성
+  gap: 20px; // 각 아이템 간 간격
+  padding: 20px;
   background-color: #f5f5f5;
-  padding: 10px;
   border-radius: 8px;
 }
+
+.bookItem {
+  min-width: 200px; // 각 도서 블록의 최소 너비 설정
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bookImage {
+  width: 150px; /* 고정된 너비 설정 */
+  height: 200px; /* 고정된 높이 설정 */
+  object-fit: cover; /* 비율을 유지하면서 잘 맞도록 조정 */
+  border-radius: 4px; /* 모서리 둥글게 설정 (선택 사항) */
+}
+
