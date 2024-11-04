@@ -27,10 +27,6 @@ function App() {
 
                     <Route path="/book/:id" element={<BookDetail/>}/>
                     <Route path="/category/:categoryId" element={<CategoryPage/>}/>
-                    {/*<Route path="/category/ItemNewAll" element={<BLItemNewAll/>}/>*/}
-                    {/*<Route path="/category/ItemNewSpecial" element={<BLItemNewSpecial/>}/>*/}
-                    {/*<Route path="/category/ItemEditorChoice" element={<BLItemEditorChoice/>}/>*/}
-                    {/*<Route path="/category/bestseller" element={<BLBestseller/>}/>*/}
                 </Routes>
             </TimerProvider>
         </div>
@@ -38,29 +34,3 @@ function App() {
 }
 
 export default App;
-
-// import logo from './logo.svg';
-// import './App.css';
-//
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-//
-// export default App;
