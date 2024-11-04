@@ -1,55 +1,65 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import '../components/CssBookList.scss'
 import axios from "axios";
-import './CssBookList.scss'
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-
-function BLBestseller() {
-
-    const [books, setBooks] = useState([]);
+const BLBestseller = () => {
+    const [products, setProducts] = useState([]);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const category = {id: "bestseller", title: "베스트셀러"};
 
     useEffect(() => {
-        fetchBooks();
+        fetchProducts();
     }, []);
 
-    const fetchBooks = async () => {
-        const apiKey = process.env.REACT_APP_ALADIN_API_KEY;    // .env 파일의 API 키를 가져옴
-        const url = "http://www.aladin.co.kr/ttb/api/ItemList.aspx";
-
+    // Spring Boot API에서 상품 데이터 가져오기
+    const fetchProducts = async () => {
         try {
-            const response = await axios.get(url, {
+            const response = await axios.get("http://localhost:8080/api/aladin-books", {
                 params: {
-                    ttbkey: apiKey,
-                    QueryType: "Bestseller",
-                    MaxResults: 5,
-                    Cover: "Big",
-                    Output: "JS",
-                    Version: "20131101",
-                },
+                    queryType: category.id, // 카테고리 예시: Bestseller
+                    maxResults: 5            // 가져올 최대 상품 수
+                }
             });
-            setBooks(response.data.item);   // 응답 데이터에서 item 배열만 상태에 저장
+
+            console.log(response.data)
+            setProducts(response.data.item || []); // API 응답에서 상품 데이터 설정
         } catch (error) {
-            console.error("Error fetching books: ", error);
+            console.error("Error fetching products:", error);
+            setError("상품 데이터를 불러오지 못했습니다.");
         }
+    };
+
+    const handleCategoryClick = (categoryId) => {
+        navigate(`/category/${categoryId}`);
     };
 
     return (
         <div>
-            <div className="bookWrap">
-                {books.map((book) => (
-                    <div className="itemId" key={book.itemId}>
-                        <Link to={`/book/${book.itemId}`}>
-                            <img className="bookImg" src={book.cover} alt={book.title}/>
-                        </Link>
-                        <Link to={`/book/${book.itemId}`} className="bookTitle">
-                            <p>{book.title}</p>
-                        </Link>
+            <div className="headerContainer">
+                <h1>{category.title}</h1>
+                <button
+                    onClick={() => handleCategoryClick(category.id)}
+                    className="btnMore"
+                >
+                    더보기
+                </button>
+            </div>
+
+            {error && <p>{error}</p>}
+            {/* 해당 카테고리 도서 영역설정 */}
+            <div className="bookListContainer">
+                {products.map((product) => (
+                    <div key={product.itemId} className="bookItem">
+                        <img src={product.cover} alt={product.title} className="bookImage"/>
+                        <h3>{product.title}</h3>
+                        <p>{product.author}</p>
                     </div>
                 ))}
             </div>
         </div>
     );
-
 }
 
 export default BLBestseller;
