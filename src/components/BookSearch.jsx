@@ -1,19 +1,15 @@
 import {useState} from "react";
-import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 const BookSearch = () => {
     const [query, setQuery] = useState('');
-    const [books, setBooks] = useState([]);
+    const navigate = useNavigate();
 
-    const searchBooks = async () => {
-        try{
-            const response = await axios.get("http://localhost:8080/api/search-books", {
-                params: {query: query},
-            });
-            setBooks(response.data.documents);
-        } catch (error) {
-            console.error("Error fetching books:", error);
+    const searchBooks = () => {
+        // 검색어를 SearchPage로 넘겨서 해당 페이지에서 도서 정보를 가져오도록 함
+        if (query) {
+            navigate(`/searchpage?query=${query}`);
         }
     };
 
@@ -26,12 +22,8 @@ const BookSearch = () => {
                 placeholder="검색할 도서 제목"
             />
 
+            {/* 검색 버튼 */}
             <button onClick={searchBooks}>검색</button>
-            <ul>
-                {books.map((book, index) => (
-                    <li key={index}>{book.title} - {book.authors.join(", ")}</li>
-                ))}
-            </ul>
         </div>
     );
 }
