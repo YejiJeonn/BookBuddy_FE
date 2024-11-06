@@ -8,7 +8,7 @@ const CategoryPage = () => {
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 20;  // 한 페이지에 표시할 항목 수
+    const itemsPerPage = 15;  // 한 페이지에 표시할 항목 수
 
     useEffect(() => {
         fetchCategoryProducts(categoryId, currentPage);

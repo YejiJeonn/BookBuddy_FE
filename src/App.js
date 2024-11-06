@@ -10,6 +10,7 @@ import React from "react";
 import CategoryPage from "./pages/CategoryPage";
 import Timer from "./pages/Timer";
 import {TimerProvider} from "./pages/TimerContext";
+import SearchPage from "./pages/SearchPage";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
 
                     <Route path="/book/:id" element={<BookDetail/>}/>
                     <Route path="/category/:categoryId" element={<CategoryPage/>}/>
+                    <Route path="/searchpage" element={<SearchPage/>}/>
                 </Routes>
             </TimerProvider>
         </div>
