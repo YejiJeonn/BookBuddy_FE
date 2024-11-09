@@ -14,23 +14,11 @@ const SearchPage = () => {
     const query = searchParams.get("query");
 
 
-    useEffect(() => {
+    useEffect(async () => {
         if (query) {
-            fetchBooks(query, page);
+            await fetchBooks(query, page);
         }
     }, [query, page]);
-
-    // const fetchBooks = async () => {
-    //     try {
-    //         const response = await axios.get("http://localhost:8080/api/search", {
-    //             params: {query: query},
-    //         });
-    //         setBooks(response.data.documents);
-    //     } catch (error) {
-    //         console.error("Error fetching books:", error);
-    //         setError(e.getError() || "도서 데이터를 불러오지 못했습니다.");
-    //     }
-    // };
 
     const fetchBooks = async (searchQuery, currentPage) => {
         try {
@@ -44,7 +32,7 @@ const SearchPage = () => {
 
             console.log(response.data.item);
             setBooks(response.data.item || []);
-        } catch (err) {
+        } catch (error) {
             console.error("Error fetching books:", error);
             setError("불러오지 못했습니다.");
         }
@@ -74,7 +62,7 @@ const SearchPage = () => {
                 ))}
             </div>
 
-            <div className="paginationButtons">
+            <div className="pagination">
                 <button onClick={handlePreviousPage} disabled={page === 1}>이전</button>
                 <span>페이지 {page}</span>
                 <button onClick={handleNextPage}>다음</button>

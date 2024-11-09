@@ -29,6 +29,7 @@ function App() {
                     <Route path="/book/:id" element={<BookDetail/>}/>
                     <Route path="/category/:categoryId" element={<CategoryPage/>}/>
                     <Route path="/searchpage" element={<SearchPage/>}/>
+                    <Route path="/book-detail/:bookIsbn" element={<BookDetail/>}/>
                 </Routes>
             </TimerProvider>
         </div>

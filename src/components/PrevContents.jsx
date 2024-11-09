@@ -33,6 +33,10 @@ const PrevContents = ({category}) => {
         navigate(`/category/${categoryId}`);
     };
 
+    const handleShowDetail = (bookIsbn) => {
+        navigate(`/book-detail/${bookIsbn}`);
+    };
+
     return (
         <div>
             <div className="headerContainer">
@@ -49,10 +53,14 @@ const PrevContents = ({category}) => {
             {/* 해당 카테고리 도서 영역설정 */}
             <div className="bookListContainer">
                 {products.map((product) => (
-                    <div key={product.itemId} className="bookItem">
-                        <img src={product.cover} alt={product.title} className="bookImage"/>
-                        <h3>{product.title}</h3>
-                        <p>{product.author}</p>
+
+                    <div key={product.isbn13} onClick={() => handleShowDetail(product.isbn13)}>
+                        <div className="bookItem">
+                            <img src={product.cover} alt={product.title} className="bookImage"/>
+                            <h3>{product.title}</h3>
+                            <p>{product.author}</p>
+                            <p>{product.isbn13}</p>
+                        </div>
                     </div>
                 ))}
             </div>
