@@ -1,32 +1,42 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {MenuData} from "./menuData";
 import './CssMenuBar.scss';
 import icMenu from "../assets/icMenu.png";
 import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../context/AuthContext";
 
 function MenuBar() {
-    const [isHovered, setIsHovered] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
-    const [userInfo, setUserInfo] = useState(null); // 사용자 정보 관리
+    const [isOpen, setIsOpen] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
+    // const [userInfo, setUserInfo] = useState(null); // 사용자 정보 관리
+    const {user, setUser} = useContext(AuthContext);    // AuthContext에서 user 정보 가져오기
     const navigate = useNavigate();
 
 
-    const handleMouseEnter = () => {
-        setIsHovered(true);
+    const handleMouseClick = () => {
+        setIsOpen(prevState => !prevState);
     };
 
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
+    // const handleMouseLeave = () => {
+    //     setIsHovered(false);
+    // };
 
-    const onLoginSuccess = (user) => {
-        setIsLoggedIn(true);
-        setUserInfo(user);
-    };
+    // const onLoginSuccess = (user) => {
+    //     setIsLoggedIn(true);
+    //     setUserInfo(user);
+    // };
+
+    // const handleLogin = () => {
+    //     navigate("/login");
+    // };
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        setUserInfo(null);
+        // setIsLoggedIn(false);
+        // setUserInfo(null);
+        // 로그아웃 시 로컬 스토리지에서 토큰 제거 및 사용자 정보 초기화
+        localStorage.removeItem('accessToken');
+        setUser(null);
+        navigate("/login");
     };
 
 
@@ -36,41 +46,41 @@ function MenuBar() {
 
                 <button
                     className="btn-img"
-                    onMouseEnter={handleMouseEnter}
+                    onClick={handleMouseClick}
                     style={{backgroundImage: `url(${icMenu})`}}
                 />
 
-                {isHovered ? (
+                {isOpen && (
                     <ul
                         className="menuLists"
-                        onMouseEnter={handleMouseEnter}  // menuLists에 마우스가 올라갈 때 유지
-                        onMouseLeave={handleMouseLeave}  // menuLists에서 마우스가 떠날 때 상태 해제
+                        // onMouseEnter={handleMouseEnter}  // menuLists에 마우스가 올라갈 때 유지
+                        // onMouseLeave={handleMouseLeave}  // menuLists에서 마우스가 떠날 때 상태 해제
                     >
                         {MenuData.map((list) => {
 
                             // 메뉴 동적 업데이트
-                            if (list.menu === "프로필" && isLoggedIn) {
+                            if (list.menu === "프로필" && user) {
                                 return (
                                     <li key={list.id} className="menuList">
-                                        <a href={isLoggedIn ? alert("로그인해주세요.") : list.url}>
-                                            <span>{userInfo?.name} 님</span>
+                                        <a href="/profile">
+                                            <span>{user.name} 님</span>
                                         </a>
                                         <hr className="menuLine"/>
                                     </li>
                                 );
                             }
 
-                            if (list.menu === "로그인") {
+                            if (!user) {
                                 return (
                                     <li key={list.id} className="menuList">
                                         <a
-                                            href="#"
+                                            href="/login"
                                             onClick={(e) => {
                                                 e.preventDefault();
-                                                isLoggedIn ? handleLogout() : navigate("/login");
+                                                user ? handleLogout() : navigate("/login");
                                             }}
                                         >
-                                            {isLoggedIn ? "로그아웃" : list.menu}
+                                            {user ? "로그아웃" : list.menu}
                                         </a>
                                         <hr className="menuLine"/>
                                     </li>
@@ -99,7 +109,7 @@ function MenuBar() {
                         {/*    </React.Fragment>*/}
                         {/*))}*/}
                     </ul>
-                ) : null}
+                )}
             </div>
         </nav>
     );

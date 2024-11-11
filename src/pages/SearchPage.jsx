@@ -14,10 +14,20 @@ const SearchPage = () => {
     const query = searchParams.get("query");
 
 
-    useEffect(async () => {
-        if (query) {
-            await fetchBooks(query, page);
-        }
+    // 직접 비동기 함수 호출하면 안됨 -> useEffect는 클린업 함수만 반환 가능
+    // useEffect(async () => {
+    //     if (query) {
+    //         await fetchBooks(query, page);
+    //     }
+    // }, [query, page]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (query) {
+                await fetchBooks(query, page);
+            }
+        };
+        fetchData();
     }, [query, page]);
 
     const fetchBooks = async (searchQuery, currentPage) => {

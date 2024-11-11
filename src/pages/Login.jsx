@@ -1,6 +1,7 @@
-import React, {useState} from "react";
-import axios from "axios";
+import React, {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {AuthContext} from "../context/AuthContext";
 
 const styles = {
     loginBlock: {
@@ -34,6 +35,8 @@ function Login() {
     // param 선언
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
+    // const [userInfo, setUserInfo] = useState(null);
+    const {setUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleChange = (event) => {
@@ -53,16 +56,40 @@ function Login() {
             password: password,
         };
 
-        axios.post('http://localhost:8080/users/login', data)
-            .then(response => {
-                alert(response.data);
-                navigate('/');
-                // console.log('Data sent successfully:', response.data);
-            })
-            .catch(error => {
-                alert("로그인 실패");
-                console.error('Error sending data:', error);
+        try {
+            const response = await axios.post('http://localhost:8080/users/login', data);
+            const token = response.data;    // 서버로부터 받은 토큰
+
+            // 토큰을 로컬 스토리지에 저장하여 인증 상태 유지
+            localStorage.setItem('accessToken', token);
+
+            // 유저 정보를 가져오기 위해 서버에 요청
+            const userResponse = await axios.post('http://localhost:8080/users/info', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
+
+            const userInfo = userResponse.data;     // 사용자 정보 저장
+            setUser(userInfo);
+            alert("로그인 성공");
+            navigate('/');  // 로그인 후 홈 화면으로 이동
+        } catch (error) {
+            alert("로그인 실패");
+            console.error('Error sending data: ', error);
+        }
+
+        // 원래 로그인 로직
+        // axios.post('http://localhost:8080/users/login', data)
+        //     .then(response => {
+        //         alert(response.data);
+        //         navigate('/');
+        //         // console.log('Data sent successfully:', response.data);
+        //     })
+        //     .catch(error => {
+        //         alert("로그인 실패");
+        //         console.error('Error sending data:', error);
+        //     });
     };
 
     const handleSignUp = () => {
