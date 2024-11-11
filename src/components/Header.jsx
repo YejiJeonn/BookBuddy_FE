@@ -38,7 +38,7 @@ const styles = {
     }
 };
 
-function Header(props) {
+const Header = () => {
 
     return (
         <div style={styles.header}>
