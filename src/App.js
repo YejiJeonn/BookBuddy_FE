@@ -11,10 +11,10 @@ import ReadHistory from "./pages/ReadHistory";
 import BookDetail from "./components/BookDetail";
 import CategoryPage from "./pages/CategoryPage";
 import Timer from "./pages/Timer";
-import {TimerProvider} from "./pages/TimerContext";
 import SearchPage from "./pages/SearchPage";
 import Header from "./components/Header";
 import {AuthProvider} from "./context/AuthContext";
+import {TimerProvider} from "./pages/TimerContext";
 
 
 function App() {

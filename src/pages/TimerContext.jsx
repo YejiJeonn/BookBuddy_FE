@@ -4,21 +4,12 @@ const TimerContext = createContext();
 
 export const TimerProvider = ({children}) => {
     const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
-    const [stopwatchTime, setStopwatchTime] = useState(() => {
-        const savedTime = localStorage.getItem('stopwatchTime');
-        return savedTime ? parseInt(savedTime, 10) : 0;
-    });
+    const [stopwatchTime, setStopwatchTime] = useState(0); // 항상 0으로 초기화
 
     const [isTimerRunning, setIsTimerRunning] = useState(false);
-    const [timerTime, setTimerTime] = useState(() => {
-        const savedTimerTime = localStorage.getItem('timerTime');
-        return savedTimerTime ? parseInt(savedTimerTime, 10) : 300000; // 기본 5분
-    });
+    const [timerTime, setTimerTime] = useState(300000); // 기본 5분
+    const [userInput, setUserInput] = useState(5); // 분 단위
 
-    const [userInput, setUserInput] = useState(() => {
-        const savedUserInput = localStorage.getItem('userInput');
-        return savedUserInput ? parseInt(savedUserInput, 10) : 5; // 분 단위
-    });
     const [isTimerInitialized, setIsTimerInitialized] = useState(false);
 
     // 스톱워치 기능
@@ -26,22 +17,13 @@ export const TimerProvider = ({children}) => {
         let interval;
         if (isStopwatchRunning) {
             interval = setInterval(() => {
-                setStopwatchTime((prevTime) => {
-                    const updatedTime = prevTime + 1000;
-                    localStorage.setItem('stopwatchTime', updatedTime);
-                    return updatedTime;
-                });
+                setStopwatchTime((prevTime) => prevTime + 1000);
             }, 1000);
         } else {
             clearInterval(interval);
         }
         return () => clearInterval(interval);
     }, [isStopwatchRunning]);
-
-    // 페이지 로드 시 로컬 스토리지에서 userInput을 불러옴
-    useEffect(() => {
-        localStorage.setItem('userInput', userInput);
-    }, [userInput]);
 
     return (
         <TimerContext.Provider

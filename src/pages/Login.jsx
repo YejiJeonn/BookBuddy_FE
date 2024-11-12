@@ -1,7 +1,6 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {AuthContext} from "../context/AuthContext";
 
 const styles = {
     loginBlock: {
@@ -35,8 +34,6 @@ function Login() {
     // param 선언
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
-    // const [userInfo, setUserInfo] = useState(null);
-    const {setUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleChange = (event) => {
@@ -51,6 +48,8 @@ function Login() {
     const handleSubmit = async (event) => {
         event.preventDefault();  // 폼 제출 시 새로고침 방지
 
+        localStorage.setItem('userId', userId);
+
         const data = {
             userId: userId,
             password: password,
@@ -58,20 +57,22 @@ function Login() {
 
         try {
             const response = await axios.post('http://localhost:8080/users/login', data);
-            const token = response.data;    // 서버로부터 받은 토큰
+            const token = response.data.token;    // 서버로부터 받은 토큰
+            const nickName = response.data.nickName;     // 사용자 정보 저장
 
             // 토큰을 로컬 스토리지에 저장하여 인증 상태 유지
             localStorage.setItem('accessToken', token);
+            localStorage.setItem('nickName', nickName);
 
-            // 유저 정보를 가져오기 위해 서버에 요청
-            const userResponse = await axios.post('http://localhost:8080/users/info', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            // // 유저 정보를 가져오기 위해 서버에 요청
+            // const userResponse = await axios.get('http://localhost:8080/users/info', {
+            //     headers: {
+            //         Authorization: `Bearer ${token}`,
+            //     },
+            // });
 
-            const userInfo = userResponse.data;     // 사용자 정보 저장
-            setUser(userInfo);
+
+            console.log("token: " + token + "\nnickName: " + nickName);
             alert("로그인 성공");
             navigate('/');  // 로그인 후 홈 화면으로 이동
         } catch (error) {
