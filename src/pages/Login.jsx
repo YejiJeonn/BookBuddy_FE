@@ -63,16 +63,7 @@ function Login() {
             // 토큰을 로컬 스토리지에 저장하여 인증 상태 유지
             localStorage.setItem('accessToken', token);
             localStorage.setItem('nickName', nickName);
-
-            // // 유저 정보를 가져오기 위해 서버에 요청
-            // const userResponse = await axios.get('http://localhost:8080/users/info', {
-            //     headers: {
-            //         Authorization: `Bearer ${token}`,
-            //     },
-            // });
-
-
-            console.log("token: " + token + "\nnickName: " + nickName);
+            
             alert("로그인 성공");
             navigate('/');  // 로그인 후 홈 화면으로 이동
         } catch (error) {

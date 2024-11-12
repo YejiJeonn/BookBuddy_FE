@@ -59,7 +59,6 @@ const PrevContents = ({category}) => {
                             <img src={product.cover} alt={product.title} className="bookImage"/>
                             <h3>{product.title}</h3>
                             <p>{product.author}</p>
-                            <p>{product.isbn13}</p>
                         </div>
                     </div>
                 ))}
