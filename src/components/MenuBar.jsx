@@ -7,8 +7,6 @@ import {AuthContext} from "../context/AuthContext";
 
 function MenuBar() {
     const [isOpen, setIsOpen] = useState(false);
-    // const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
-    // const [userInfo, setUserInfo] = useState(null); // 사용자 정보 관리
     const {user, setUser} = useContext(AuthContext);    // AuthContext에서 user 정보 가져오기
     const navigate = useNavigate();
 

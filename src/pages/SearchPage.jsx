@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import axios from "axios";
 
 const SearchPage = () => {
@@ -10,6 +10,7 @@ const SearchPage = () => {
     const [page, setPage] = useState(1); // 페이지 번호 상태 추가
     const [error, setError] = useState(null);
     const booksPerPage = 5;
+    const navigate = useNavigate();
 
     const query = searchParams.get("query");
 
@@ -58,13 +59,17 @@ const SearchPage = () => {
         }
     };
 
+    const handleShowDetail = (bookIsbn) => {
+        navigate(`/book-detail/${bookIsbn}`);
+    };
+
     return (
         <div>
             <h1>검색 결과</h1>
             {error && <p>{error}</p>}
             <div className="bookListContainer">
                 {books.map((book) => (
-                    <div key={book.itemId} className="bookItem">
+                    <div key={book.isbn13} onClick={() => handleShowDetail(book.isbn13)} className="bookItem">
                         <img src={book.cover} alt={book.title} className="bookImage"/>
                         <h3>{book.title}</h3>
                         <p>{book.author}</p>

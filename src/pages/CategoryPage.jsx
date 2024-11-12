@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import '../components/CssCategoryPage.scss'
 
@@ -9,6 +9,7 @@ const CategoryPage = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 15;  // 한 페이지에 표시할 항목 수
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchCategoryProducts(categoryId, currentPage);
@@ -37,13 +38,17 @@ const CategoryPage = () => {
         }
     };
 
+    const handleShowDetail = (bookIsbn) => {
+        navigate(`/book-detail/${bookIsbn}`);
+    };
+
     return (
         <div>
             <h1>{categoryId} 카테고리</h1>
             {error && <p>{error}</p>}
             <div className="bookListContainer">
                 {products.map((product) => (
-                    <div key={product.itemId} className="bookItem">
+                    <div key={product.isbn13} className="bookItem" onClick={() => handleShowDetail(product.isbn13)}>
                         <img src={product.cover} alt={product.title} className="bookImage"/>
                         <h3>{product.title}</h3>
                         <p>{product.author}</p>
