@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import {useTimer} from './TimerContext';
 import '../components/CssTimer.scss';
+import {useNavigate} from "react-router-dom";
 
 const TimerPage = () => {
     const {
@@ -13,8 +14,15 @@ const TimerPage = () => {
 
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
-    const [bookTitle, setBookTitle] = useState("");
+    const navigate = useNavigate();
 
+
+    const [bookTitle, setBookTitle] = useState("");
+    const [bookIsbn, setBookIsbn] = useState("");
+    const [books, setBooks] = useState([]);
+    const [page, setPage] = useState(1);
+    const [query, setQuery] = useState("");
+    const booksPerPage = 5;
 
     const formatTime = (time) => {
         const minutes = Math.floor(time / 60000);
@@ -39,31 +47,79 @@ const TimerPage = () => {
         setEndTime(null);
     };
 
-    // 저장 버튼 클릭 시 읽기 시간 저장
-    // const saveReadingTime = async () => {
-    //     const userId = 1; // 사용자 ID (로그인 상태라면 실제 ID로 대체)
-    //     const readingTime = stopwatchTime || (timerTime - userInput * 60000); // 경과 시간
-    //     const startDate = startTime ? startTime.toISOString() : null;
-    //     const endDate = endTime ? endTime.toISOString() : null;
-
     const saveReadingTime = async () => {
-        const userId = 1;  // 예제용 사용자 ID
+        const token = localStorage.getItem('accessToken');
+        const userId = localStorage.getItem('userId');
         const startDate = startTime ? startTime.toISOString() : null;
         const endDate = endTime ? endTime.toISOString() : null;
-        const readingTime = stopwatchTime;
+        const today = new Date();
+        const createDate = today.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        });
 
+        if (!bookTitle) {
+            alert("도서 제목을 입력해주세요.");
+        } else {
+            try {
+                await axios.post("http://localhost:8080/api/save-reading-time", {
+                    userId: userId,
+                    createdAt: createDate,
+                    startTime: startDate,
+                    endTime: endDate,
+                    bookTitle,
+                    bookIsbn
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                alert("독서 시간이 저장되었습니다!");
+            } catch (error) {
+                console.error("Error saving reading time:", error);
+                alert("로그인하고 이용해주세요.");
+                navigate("/login");
+            }
+        }
+    };
+
+    // 검색 결과 가져오기
+    const fetchBooks = async (searchQuery, currentPage) => {
         try {
-            await axios.post("http://localhost:8080/api/save-reading-time", {
-                userId,
-                startTime: startDate,
-                endTime: endDate,
-                readingTime,
-                bookTitle
+            const response = await axios.get("http://localhost:8080/api/search", {
+                params: {
+                    query: searchQuery,
+                    maxResults: 5,
+                    start: (currentPage - 1) * booksPerPage + 1,
+                },
             });
-            alert("독서 시간이 저장되었습니다!");
+            setBooks(response.data.item || []);
         } catch (error) {
-            console.error("Error saving reading time:", error);
-            alert("저장에 실패했습니다.");
+            console.error("Error fetching books:", error);
+            alert("도서 검색에 실패했습니다.");
+        }
+    };
+
+    // 검색어 입력 시 도서 검색
+    const handleSearch = (e) => {
+        e.preventDefault();
+        fetchBooks(query, page);
+    };
+
+    // 도서 클릭 시 bookTitle 설정
+    const handleBookClick = (title, bookIsbn) => {
+        setBookTitle(title);
+        setBookIsbn(bookIsbn);
+    };
+
+    const handleNextPage = () => {
+        setPage((prevPage) => prevPage + 1);
+    };
+
+    const handlePreviousPage = () => {
+        if (page > 1) {
+            setPage((prevPage) => prevPage - 1);
         }
     };
 
@@ -88,7 +144,7 @@ const TimerPage = () => {
                 type="text"
                 value={bookTitle}
                 onChange={(e) => setBookTitle(e.target.value)}
-                placeholder="책 제목을 입력하세요"
+                placeholder="도서 제목"
                 style={{marginBottom: "10px", padding: "5px"}}
             />
             <button onClick={toggleStopwatch} className="btn">
@@ -102,6 +158,36 @@ const TimerPage = () => {
                 <button onClick={saveReadingTime} className="btnSave">
                     저장
                 </button>
+            </div>
+
+            {/* 도서 검색 */}
+            <div style={{marginTop: '30px'}}>
+                <form onSubmit={handleSearch}>
+                    <input
+                        type="text"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder="검색어를 입력하세요"
+                    />
+                    <button type="submit">검색</button>
+                </form>
+
+                <div className="bookListContainer">
+                    {books.map((book) => (
+                        <div key={book.itemId} className="bookItem"
+                             onClick={() => handleBookClick(book.title, book.isbn13)}>
+                            <img src={book.cover} alt={book.title} className="bookImage"/>
+                            <h3>{book.title}</h3>
+                            <p>{book.author}</p>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="pagination">
+                    <button onClick={handlePreviousPage} disabled={page === 1}>이전</button>
+                    <span>페이지 {page}</span>
+                    <button onClick={handleNextPage}>다음</button>
+                </div>
             </div>
         </div>
     );

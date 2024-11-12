@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {MenuData} from "./menuData";
 import './CssMenuBar.scss';
 import icMenu from "../assets/icMenu.png";
@@ -12,29 +12,25 @@ function MenuBar() {
     const {user, setUser} = useContext(AuthContext);    // AuthContext에서 user 정보 가져오기
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // 페이지 로드 시 localStorage에서 사용자 정보 가져오기
+        const savedUser = localStorage.getItem("nickName");
+        if (savedUser) {
+            setUser(savedUser); // 사용자 정보로 상태 초기화
+        }
+    }, [setUser]);
+
 
     const handleMouseClick = () => {
         setIsOpen(prevState => !prevState);
     };
-
-    // const handleMouseLeave = () => {
-    //     setIsHovered(false);
-    // };
-
-    // const onLoginSuccess = (user) => {
-    //     setIsLoggedIn(true);
-    //     setUserInfo(user);
-    // };
-
-    // const handleLogin = () => {
-    //     navigate("/login");
-    // };
 
     const handleLogout = () => {
         // setIsLoggedIn(false);
         // setUserInfo(null);
         // 로그아웃 시 로컬 스토리지에서 토큰 제거 및 사용자 정보 초기화
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('nickName');
         setUser(null);
         navigate("/login");
     };
@@ -63,29 +59,24 @@ function MenuBar() {
                                 return (
                                     <li key={list.id} className="menuList">
                                         <a href="/profile">
-                                            <span>{user.name} 님</span>
+                                            <span>{user} 님</span>
                                         </a>
                                         <hr className="menuLine"/>
                                     </li>
                                 );
                             }
 
-                            if (!user) {
+                            if (list.menu === "로그인" && user) {
                                 return (
                                     <li key={list.id} className="menuList">
-                                        <a
-                                            href="/login"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                user ? handleLogout() : navigate("/login");
-                                            }}
-                                        >
-                                            {user ? "로그아웃" : list.menu}
-                                        </a>
+                                        <div onClick={handleLogout}>
+                                            <span>로그아웃</span>
+                                        </div>
                                         <hr className="menuLine"/>
                                     </li>
                                 );
                             }
+
 
                             return (
                                 <React.Fragment key={list.id}>
