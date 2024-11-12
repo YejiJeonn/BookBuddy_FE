@@ -39,7 +39,7 @@ function MyPage() {
     };
 
     const handleHistoryClick = () => {
-        navigate(`/ReadHistory`);
+        navigate(`/reading-history`);
     };
 
     return (
