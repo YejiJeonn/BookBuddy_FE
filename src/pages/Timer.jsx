@@ -52,6 +52,7 @@ const TimerPage = () => {
         const userId = localStorage.getItem('userId');
         const startDate = startTime ? startTime.toISOString() : null;
         const endDate = endTime ? endTime.toISOString() : null;
+        
         const today = new Date();
         const createDate = today.toLocaleDateString('ko-KR', {
             year: 'numeric',

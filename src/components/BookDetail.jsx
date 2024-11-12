@@ -14,13 +14,9 @@ const BookDetail = () => {
     // 비동기 함수를 정의하고 즉시 호출하는 방식 사용
     const fetchBookDetail = async () => {
         try {
-            console.log("book" + bookIsbn);
-
             const response = await axios.get("http://localhost:8080/api/book-detail", {
                 params: {itemId: bookIsbn} // itemId가 정확히 지정되었는지 확인
             });
-            console.log("book" + bookIsbn);
-            console.log(response.data);
             setBook(response.data.item[0] || null);
         } catch (error) {
             console.error("Error fetching book details:", error);
