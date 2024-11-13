@@ -12,22 +12,27 @@ import {
     Tooltip
 } from "chart.js";
 import {Line} from "react-chartjs-2";
+import {useNavigate} from "react-router-dom";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function ReadHistory() {
     const [readingTimes, setReadingTimes] = useState([]);
+    const [book, setBook] = useState('');
     const [error, setError] = useState(null);
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [],
     });
     const token = localStorage.getItem('accessToken');
+    const userId = localStorage.getItem('userId');
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchReadingTimes();
     }, []);
 
+    // 타이머 측정 도서 목록 가져오기
     const fetchReadingTimes = async () => {
         try {
             const response = await axios.get("http://localhost:8080/api/reading-times", {
@@ -38,42 +43,26 @@ function ReadHistory() {
 
             const readingData = response.data;
 
+            // 타이머 도서 목록 중 현재 로그인 된 아이디의 도서목록만 필터링
+            const filterData = readingData.filter(book => book.userId === userId);
+
             // 각 도서의 커버 이미지를 불러오는 API 호출
             const updatedReadingData = await Promise.all(
-                readingData.map(async (book) => {
-                    const coverResponse = await fetchBookCover(book.bookIsbn);
-                    /*console.log(book.bookIsbn);*/
+                filterData.map(async (book) => {
+                    // const coverResponse = await fetchBookCover(book.bookIsbn);
+                    // console.log(book);
                     return {
                         ...book,
-                        cover: coverResponse, // 가져온 cover 이미지 URL 추가
+                        // cover: coverResponse, // 가져온 cover 이미지 URL 추가
                     };
                 })
             );
 
-            setReadingTimes(response.data);
-            processChartData(response.data);
+            setReadingTimes(updatedReadingData);
+            processChartData(updatedReadingData);
         } catch (error) {
             console.error("Error fetching reading times:", error);
             setError("데이터를 불러오는데 실패했습니다.");
-        }
-    };
-
-    const [book, setBook] = useState('');
-
-    // 특정 isbn으로 책 커버 이미지 가져오기
-    const fetchBookCover = async (isbn) => {
-        try {
-            // API 호출 시 올바른 매개변수 이름과 값 전달
-            const response = await axios.get("http://localhost:8080/api/book-detail", {
-                params: {itemId: isbn} // 매개변수 이름을 서버가 기대하는 대로 수정
-            });
-
-            // 응답 데이터 구조 확인
-            console.log(response.data); // 응답 데이터의 구조를 확인
-            return setBook(response.data.item[0]) || ""; // cover가 존재하지 않으면 빈 문자열 반환
-        } catch (error) {
-            console.error("Error fetching book cover:", error);
-            return ""; // 오류 시 빈 문자열 반환
         }
     };
 
@@ -108,6 +97,10 @@ function ReadHistory() {
         });
     };
 
+    const handleShowDetail = (bookIsbn) => {
+        navigate(`/book-detail/${bookIsbn}`);
+    };
+
     return (
         <div className="history-container">
             <h1>독서 기록 목록</h1>
@@ -121,12 +114,13 @@ function ReadHistory() {
             {/* 독서 기록 목록 */}
             <div className="card-list">
                 {readingTimes.map((book) => (
-                    <div className="card" key={book.id}>
+                    <div className="card" key={book.id} onClick={() => handleShowDetail(book.bookIsbn)}>
                         <img
-                            src={book?.cover} // API 호출을 통해 받아온 cover 이미지
+                            src={book.bookCover} // API 호출을 통해 받아온 cover 이미지
                             alt={book.bookTitle}
                             className="book-cover"
                         />
+
                         <div className="card-content">
                             <h3 className="book-title">{book.bookTitle}</h3>
                             {/*<p><strong>사용자 ID:</strong> {book.userId}</p>*/}
