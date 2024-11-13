@@ -53,7 +53,7 @@ function SignUp() {
     // 아이디 중복값 검사
     const handleIdDuplicate = () => {
         axios.post("http://localhost:8080/users/check-id", null, {
-            params: { userId } // 쿼리 파라미터로 userId 전달
+            params: {userId} // 쿼리 파라미터로 userId 전달
         })
             .then(response => {
                 // setIdDuplicate(response.data);
@@ -76,7 +76,7 @@ function SignUp() {
     useEffect(() => {
         if (checkPassword === "") {
             setPwDuplicate(""); // 초기 상태
-        } else if(password === checkPassword){
+        } else if (password === checkPassword) {
             setPwDuplicate("✅");
         } else {
             setPwDuplicate("불일치");
@@ -86,7 +86,7 @@ function SignUp() {
     // 닉네임 일치 여부 확인
     const handleNickNameDuplicate = () => {
         axios.post("http://localhost:8080/users/check-nickname", null, {
-            params: { nickName } // 쿼리 파라미터로 userId 전달
+            params: {nickName} // 쿼리 파라미터로 userId 전달
         })
             .then(response => {
                 // setNickNameDuplicate(response.data);
@@ -108,19 +108,19 @@ function SignUp() {
     // 폼 제출 시 데이터 전송
     const handleSubmit = (event) => {
 
-        if(!status){
+        if (!status) {
             alert("기입한 정보를 다시 확인해주세요.");
             return;
         }
 
-        if(!password){
+        if (!password) {
             alert("비밀번호를 입력하세요.");
             return;
         }
 
         event.preventDefault();  // 폼 제출 시 새로고침 방지
         const data = {
-            userId : userId,
+            userId: userId,
             password: password,
             nickName: nickName,
             name: name,
@@ -129,14 +129,14 @@ function SignUp() {
         };
 
         axios.post('http://localhost:8080/users/signup', data)
-        .then(response => {
-            alert("회원가입 성공");
-            console.log('Data sent successfully:', response.data);
-        })
-        .catch(error => {
-            alert("회원가입 실패");
-            console.error('Error sending data:', error);
-        });
+            .then(response => {
+                alert("회원가입 성공");
+                console.log('Data sent successfully:', response.data);
+            })
+            .catch(error => {
+                alert("회원가입 실패");
+                console.error('Error sending data:', error);
+            });
     };
 
 
@@ -166,7 +166,8 @@ function SignUp() {
                             <tr align="center">
                                 <td align="center">PW &nbsp;</td>
                                 <td>
-                                    <input type="password" name="pw" value={password} onChange={handleChange} size="30"/>
+                                    <input type="password" name="pw" value={password} onChange={handleChange}
+                                           size="30"/>
                                 </td>
                                 <td></td>
                             </tr>
@@ -178,7 +179,8 @@ function SignUp() {
                             <tr align="center">
                                 <td align="center">PW 확인 &nbsp;</td>
                                 <td>
-                                    <input type="password" name="checkPassword" value={checkPassword} onChange={handleChange}
+                                    <input type="password" name="checkPassword" value={checkPassword}
+                                           onChange={handleChange}
                                            size="30"/>
                                 </td>
                                 <td>{pwDuplicate}</td>

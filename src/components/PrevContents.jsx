@@ -40,7 +40,7 @@ const PrevContents = ({category}) => {
     return (
         <div>
             <div className="headerContainer">
-                <h1>{category.title}</h1>
+                <h1 style={{marginLeft: "20px"}}>{category.title}</h1>
                 <button
                     onClick={() => handleCategoryClick(category.id)}
                     className="btnMore"
