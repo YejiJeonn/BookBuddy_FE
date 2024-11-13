@@ -19,6 +19,7 @@ const TimerPage = () => {
 
     const [bookTitle, setBookTitle] = useState("");
     const [bookIsbn, setBookIsbn] = useState("");
+    const [bookCover, setBookCover] = useState("");
     const [books, setBooks] = useState([]);
     const [page, setPage] = useState(1);
     const [query, setQuery] = useState("");
@@ -52,7 +53,7 @@ const TimerPage = () => {
         const userId = localStorage.getItem('userId');
         const startDate = startTime ? startTime.toISOString() : null;
         const endDate = endTime ? endTime.toISOString() : null;
-        
+
         const today = new Date();
         const createDate = today.toLocaleDateString('ko-KR', {
             year: 'numeric',
@@ -70,7 +71,8 @@ const TimerPage = () => {
                     startTime: startDate,
                     endTime: endDate,
                     bookTitle,
-                    bookIsbn
+                    bookIsbn,
+                    bookCover
                 }, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -109,9 +111,10 @@ const TimerPage = () => {
     };
 
     // 도서 클릭 시 bookTitle 설정
-    const handleBookClick = (title, bookIsbn) => {
+    const handleBookClick = (title, bookIsbn, bookCover) => {
         setBookTitle(title);
         setBookIsbn(bookIsbn);
+        setBookCover(bookCover);
     };
 
     const handleNextPage = () => {
@@ -176,7 +179,7 @@ const TimerPage = () => {
                 <div className="bookListContainer">
                     {books.map((book) => (
                         <div key={book.itemId} className="bookItem"
-                             onClick={() => handleBookClick(book.title, book.isbn13)}>
+                             onClick={() => handleBookClick(book.title, book.isbn13, book.cover)}>
                             <img src={book.cover} alt={book.title} className="bookImage"/>
                             <h3>{book.title}</h3>
                             <p>{book.author}</p>
