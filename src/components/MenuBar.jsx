@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {MenuData} from "./menuData";
-import './CssMenuBar.scss';
+import '../styles/CssMenuBar.scss';
 import icMenu from "../assets/icMenu.png";
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../context/AuthContext";
@@ -12,9 +12,11 @@ function MenuBar() {
 
     useEffect(() => {
         // 페이지 로드 시 localStorage에서 사용자 정보 가져오기
-        const savedUser = localStorage.getItem("nickName");
+        const savedUser = localStorage.getItem("nickname");
         if (savedUser) {
             setUser(savedUser); // 사용자 정보로 상태 초기화
+        } else {
+            setUser(null);  // localStorage 값이 없으면 null로
         }
     }, [setUser]);
 
@@ -24,13 +26,12 @@ function MenuBar() {
     };
 
     const handleLogout = () => {
-        // setIsLoggedIn(false);
-        // setUserInfo(null);
         // 로그아웃 시 로컬 스토리지에서 토큰 제거 및 사용자 정보 초기화
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('nickName');
+        localStorage.removeItem('nickname');
+        localStorage.removeItem('userId');
         setUser(null);
-        navigate("/login");
+        navigate("/");
     };
 
 

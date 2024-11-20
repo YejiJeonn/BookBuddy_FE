@@ -58,30 +58,19 @@ function Login() {
         try {
             const response = await axios.post('http://localhost:8080/users/login', data);
             const token = response.data.token;    // 서버로부터 받은 토큰
-            const nickName = response.data.nickName;     // 사용자 정보 저장
+            const nickname = response.data.nickname;     // 사용자 정보 저장
 
             // 토큰을 로컬 스토리지에 저장하여 인증 상태 유지
             localStorage.setItem('accessToken', token);
-            localStorage.setItem('nickName', nickName);
-            
+            localStorage.setItem('nickname', nickname);
+
             alert("로그인 성공");
             navigate('/');  // 로그인 후 홈 화면으로 이동
         } catch (error) {
             alert("로그인 실패");
             console.error('Error sending data: ', error);
         }
-
-        // 원래 로그인 로직
-        // axios.post('http://localhost:8080/users/login', data)
-        //     .then(response => {
-        //         alert(response.data);
-        //         navigate('/');
-        //         // console.log('Data sent successfully:', response.data);
-        //     })
-        //     .catch(error => {
-        //         alert("로그인 실패");
-        //         console.error('Error sending data:', error);
-        //     });
+        
     };
 
     const handleSignUp = () => {

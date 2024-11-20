@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import BtnToggle from "./BtnToggle";
+import '../styles/CssBookDetail.scss'
+import PrevPost from "./PrevPost";
 
 const BookDetail = () => {
     const {bookIsbn} = useParams();
     const [book, setBook] = useState(null);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchBookDetail();
@@ -24,15 +28,32 @@ const BookDetail = () => {
         }
     };
 
+    const handleShowDetail = (bookIsbn) => {
+        navigate(`/posts/${bookIsbn}`);
+    };
+
     return (
-        <div style={{padding: "20px"}}>
+        <div>
             <h2>{book?.title}</h2>
             {error && <p>{error}</p>}
-            <img src={book?.cover} alt={book?.title} style={{width: "300px"}}/>
-            <p><strong>저자: </strong> {book?.author}</p>
-            {/*<p><strong>출판사: </strong> {book.publisher}</p>*/}
-            {/*<p><strong>출판일: </strong> {book.pubDate}</p>*/}
-            <p><strong>설명: </strong> {book?.description}</p>
+            <div className="container">
+                <img src={book?.cover} alt={book?.title} style={{width: "300px"}}/>
+
+                <div>
+                    <BtnToggle/>
+                    <div>
+                        <button onClick={() => handleShowDetail(book?.isbn13)}>더보기</button>
+                        <PrevPost/>
+                    </div>
+                </div>
+            </div>
+            <div className="detailContent">
+                <p><strong>저자: </strong> {book?.author}</p>
+                <p><strong>출판사: </strong> {book?.publisher}</p>
+                <p><strong>출판일: </strong> {book?.pubDate}</p>
+                <p><strong>회원 리뷰 평점: </strong> {book?.customerReviewRank}</p>
+                <p><strong>설명: </strong> {book?.description}</p>
+            </div>
         </div>
     );
 }
