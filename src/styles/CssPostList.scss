@@ -1,0 +1,29 @@
+.postList {
+  margin: 20px;
+}
+
+.postItem {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.postItem h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.postItem p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.postItem small {
+  display: block;
+  margin-top: 10px;
+  color: #999;
+  font-size: 12px;
+}

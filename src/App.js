@@ -15,6 +15,8 @@ import SearchPage from "./pages/SearchPage";
 import Header from "./components/Header";
 import {AuthProvider} from "./context/AuthContext";
 import {TimerProvider} from "./pages/TimerContext";
+import PostListPage from "./pages/PostListPage";
+import WritePostPage from "./pages/WritePostPage";
 
 
 function App() {
@@ -42,6 +44,10 @@ function App() {
                         <Route path="/category/:categoryId" element={<CategoryPage/>}/>
                         <Route path="/searchpage" element={<SearchPage/>}/>
                         <Route path="/book-detail/:bookIsbn" element={<BookDetail/>}/>
+
+                        <Route path="/posts/:bookIsbn" element={<PostListPage/>}/>
+                        <Route path="/book/:bookIsbn/posts/write" element={<WritePostPage/>}/>
+                        <Route path="/book/:bookIsbn/posts/edit/:postId" element={<WritePostPage/>}/>
                     </Routes>
                 </TimerProvider>
             </AuthProvider>

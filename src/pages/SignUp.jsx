@@ -28,7 +28,7 @@ function SignUp() {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
-    const [nickName, setNickName] = useState('');
+    const [nickname, setNickname] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [birth, setBirth] = useState('');
@@ -44,7 +44,7 @@ function SignUp() {
         if (name === "id") setUserId(value);
         if (name === "pw") setPassword(value);
         if (name === "checkPassword") setCheckPassword(value);
-        if (name === "username") setNickName(value);
+        if (name === "username") setNickname(value);
         if (name === "name") setName(value);
         if (name === "email") setEmail(value);
         if (name === "birthday") setBirth(value);
@@ -84,9 +84,9 @@ function SignUp() {
     }, [password, checkPassword]);
 
     // 닉네임 일치 여부 확인
-    const handleNickNameDuplicate = () => {
+    const handleNicknameDuplicate = () => {
         axios.post("http://localhost:8080/users/check-nickname", null, {
-            params: {nickName} // 쿼리 파라미터로 userId 전달
+            params: {nickname: nickname} // 쿼리 파라미터로 userId 전달
         })
             .then(response => {
                 // setNickNameDuplicate(response.data);
@@ -95,7 +95,7 @@ function SignUp() {
                     alert("중복된 닉네임");
                     setStatus(false);
                 } else {
-                    alert(nickName + " 사용 가능");
+                    alert(nickname + " 사용 가능");
                     setStatus(true);
                 }
             })
@@ -122,7 +122,7 @@ function SignUp() {
         const data = {
             userId: userId,
             password: password,
-            nickName: nickName,
+            nickName: nickname,
             name: name,
             email: email,
             birth: birth,
@@ -196,11 +196,11 @@ function SignUp() {
                             <tr align="center">
                                 <td align="center">닉네임 &nbsp;</td>
                                 <td>
-                                    <input type="text" name="username" value={nickName} onChange={handleChange}
+                                    <input type="text" name="username" value={nickname} onChange={handleChange}
                                            size="30"/>
                                 </td>
                                 <td>
-                                    <button type="button" onClick={handleNickNameDuplicate}>중복확인</button>
+                                    <button type="button" onClick={handleNicknameDuplicate}>중복확인</button>
                                 </td>
                             </tr>
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import '../components/CssBookList.scss';
+import '../styles/CssBookList.scss';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 

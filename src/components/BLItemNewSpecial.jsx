@@ -1,5 +1,5 @@
 import React from "react";
-import '../components/CssBookList.scss'
+import '../styles/CssBookList.scss'
 import PrevContents from "./PrevContents";
 
 const BLItemNewSpecial = () => {

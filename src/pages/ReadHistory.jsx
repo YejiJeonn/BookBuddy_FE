@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import '../components/CssReadHistory.scss'
+import '../styles/CssReadHistory.scss'
 import {
     CategoryScale,
     Chart as ChartJS,

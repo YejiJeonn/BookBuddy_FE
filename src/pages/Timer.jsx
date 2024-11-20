@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {useTimer} from './TimerContext';
-import '../components/CssTimer.scss';
+import '../styles/CssTimer.scss';
 import {useNavigate} from "react-router-dom";
 
 const TimerPage = () => {
