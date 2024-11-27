@@ -49,7 +49,7 @@ const TimerPage = () => {
     };
 
     const saveReadingTime = async () => {
-        const token = localStorage.getItem('accessToken');
+        const token = localStorage.getItem('token');
         const userId = localStorage.getItem('userId');
         const startDate = startTime ? startTime.toISOString() : null;
         const endDate = endTime ? endTime.toISOString() : null;

@@ -12,15 +12,17 @@ const WritePostPage = ({onPostAdded}) => {
 
     useEffect(() => {
         if (postId) {
-            // 수정할 게시글 정보 불러오기
+            // 게시글 수정 시 기존 데이터 불러오기
             fetchPostDetails();
         }
     }, [postId]);
 
     const fetchPostDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/posts/${postId}`);
+            const response = await axios.get(`http://localhost:8080/api/posts/detail/${postId}`);
             const post = response.data;
+
+            // 기존 게시글 데이터 설정
             setTitle(post.title);
             setContent(post.content);
         } catch (error) {
@@ -28,64 +30,81 @@ const WritePostPage = ({onPostAdded}) => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    // 게시글 작성 핸들러
+    const handleCreate = async () => {
         const token = localStorage.getItem('accessToken');
         const userId = localStorage.getItem('userId');
-        const today = new Date();
-        const createDate = today.toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        });
-
-        e.preventDefault();
 
         try {
-            if (postId) {
-                //게시글 수정
-                await axios.put(
-                    `http://localhost:8080/api/posts/update/${postId}`, {
-                        userId: userId,
-                        title: title,
-                        content: content,
-                        nickname: author,
-                        isbn: bookIsbn,
-                    }, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
-                console.log("Post updated");
-            } else {
-                // 게시글 작성
-                const response = await axios.post(
-                    "http://localhost:8080/api/posts/write", {
-                        userId: userId,
-                        title: title,
-                        content: content,
-                        nickname: author,
-                        isbn: bookIsbn,
-                    }, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                    }
-                );
-                console.log("Post added: ", response.data);
+            const response = await axios.post(
+                "http://localhost:8080/api/posts/write",
+                {
+                    userId: userId,
+                    title: title,
+                    content: content,
+                    nickname: author,
+                    isbn: bookIsbn,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                }
+            );
+            console.log("Post added: ", response.data);
 
-                // 부모 컴포넌트에서 목록 갱신
-                if (onPostAdded) onPostAdded(response.data);
-            }
+            // 부모 컴포넌트에서 목록 갱신
+            if (onPostAdded) onPostAdded(response.data);
 
-            // 입력 필드 초기화
+            // 입력 필드 초기화 후 목록 페이지로 이동
             setTitle("");
             setContent("");
-            // navigate(`/book/${bookIsbn}/posts`);
             navigate(`/posts/${bookIsbn}`);
         } catch (error) {
-            console.error("Error adding post or updating post :", error);
+            console.error("Error adding post:", error);
         }
     };
+
+    // 게시글 수정 핸들러
+    const handleUpdate = async () => {
+        const token = localStorage.getItem('accessToken');
+        const userId = localStorage.getItem('userId');
+
+        try {
+            await axios.put(
+                `http://localhost:8080/api/posts/update/${postId}`,
+                {
+                    userId: userId,
+                    title: title,
+                    content: content,
+                    nickname: author,
+                    isbn: bookIsbn,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            console.log("Post updated");
+
+            // 수정 완료 후 목록 페이지로 이동
+            navigate(`/posts/${bookIsbn}`);
+        } catch (error) {
+            console.error("Error updating post:", error);
+        }
+    };
+
+    // 제출 버튼 핸들러 (작성 또는 수정)
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (postId) {
+            handleUpdate();
+        } else {
+            handleCreate();
+        }
+    };
+
 
     return (
         <form onSubmit={handleSubmit}>

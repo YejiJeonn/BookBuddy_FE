@@ -28,9 +28,6 @@ const BookDetail = () => {
         }
     };
 
-    const handleShowDetail = (bookIsbn) => {
-        navigate(`/posts/${bookIsbn}`);
-    };
 
     return (
         <div>
@@ -39,11 +36,11 @@ const BookDetail = () => {
             <div className="container">
                 <img src={book?.cover} alt={book?.title} style={{width: "300px"}}/>
 
-                <div>
-                    <BtnToggle/>
+                <div className="detailPost">
+                    <BtnToggle isbn13={book?.isbn13} title={book?.title} author={book?.author}
+                               publisher={book?.publisher} pubDate={book?.pubDate} cover={book?.cover}/>
                     <div>
-                        <button onClick={() => handleShowDetail(book?.isbn13)}>더보기</button>
-                        <PrevPost/>
+                        <PrevPost bookIsbn={book?.isbn13}/>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ const PostListPage = () => {
     const [posts, setPosts] = useState([]); // 게시글 상태 저장
     const [error, setError] = useState(null); // 에러 상태 저장
     const navigate = useNavigate();
+    const nickname = localStorage.getItem('nickname');
 
     useEffect(() => {
         if (bookIsbn) {
@@ -30,28 +31,38 @@ const PostListPage = () => {
     };
 
     // 게시글 삭제
-    const handleDelete = async (postId) => {
+    const handleDelete = async (postId, postNickname) => {
         const confirmDelete = window.confirm("게시글을 삭제하시겠습니까?");
         if (!confirmDelete) return;
 
         const token = localStorage.getItem("accessToken");
-        try {
-            await axios.delete(`http://localhost:8080/api/posts/delete/${postId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            // 삭제 후 게시글 목록 갱신
-            setPosts(posts.filter(post => post.id !== postId));     // 삭제된 postId를 제외
-        } catch (err) {
-            console.error("Error deleting post:", err);
-            setError("게시글 삭제에 실패했습니다.");
+        if (nickname === postNickname) {
+            try {
+                await axios.delete(`http://localhost:8080/api/posts/delete/${postId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                // 삭제 후 게시글 목록 갱신
+                setPosts(posts.filter(post => post.id !== postId));     // 삭제된 postId를 제외
+            } catch (err) {
+                console.error("Error deleting post:", err);
+                setError("게시글 삭제에 실패했습니다.");
+            }
+        } else {
+            alert("작성자만 수정할 수 있습니다.");
+            return 0;
         }
     };
 
     // 게시글 수정 페이지로 이동
-    const handleEdit = (postId) => {
-        navigate(`/book/${bookIsbn}/posts/edit/${postId}`);
+    const handleEdit = (postId, postNickname) => {
+        if (nickname === postNickname) {
+            navigate(`/book/${bookIsbn}/posts/edit/${postId}`);
+        } else {
+            alert("작성자만 수정할 수 있습니다.");
+            return 0;
+        }
     };
 
     // 게시글 작성 페이지로 이동
@@ -81,8 +92,8 @@ const PostListPage = () => {
                                 작성자: {post.nickname} | 작성일: {post.createAt}
                             </small>
                             <div className="postActions">
-                                <button onClick={() => handleEdit(post.id)}>수정</button>
-                                <button onClick={() => handleDelete(post.id)}>삭제</button>
+                                <button onClick={() => handleEdit(post.id, post.nickname)}>수정</button>
+                                <button onClick={() => handleDelete(post.id, post.nickname)}>삭제</button>
                             </div>
                         </div>
                     ))
