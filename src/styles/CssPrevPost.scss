@@ -1,40 +1,81 @@
+/* 전체 슬라이더 컨테이너 */
 .prev-post-slider {
+  position: relative;
   width: 100%;
-  max-width: 600px;
+  //max-width: 300px;
   margin: 0 auto;
-  padding: 20px;
+  overflow: hidden;
   background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 10px;
 }
 
 .post-container {
-  margin-bottom: 20px;
+  width: 95%;
 }
 
-.navigation {
+/* 슬라이더 */
+.slider {
   display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* 슬라이드 개별 항목 */
+.slide {
+  flex: 0 0 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 슬라이드 제목 */
+.slide-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* 슬라이드 내용 */
+.slide-content {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* 슬라이드 작성자 */
+.slide-author {
+  font-size: 0.7rem;
+  color: #666;
+}
+
+/* 게시글 번호 */
+.index {
+  font-size: 0.7rem;
+  color: #666;
+}
+
+/* 로딩 메시지 */
+.loading-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+  padding: 20px;
+}
+
+/* 게시글 없음 메시지 */
+.no-posts-message {
+  text-align: center;
+  font-size: 1rem;
+  color: #999;
+  padding: 20px;
 }
 
 button {
-  padding: 10px;
-  font-size: 14px;
-  color: #fff;
-  background-color: #0066cc;
-  border: none;
-  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #005bb5;
-}
-
-button:focus {
-  outline: none;
-  background-color: #004c99;
 }

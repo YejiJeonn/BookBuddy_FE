@@ -2,9 +2,15 @@
   padding: 20px;
   display: flex;
   align-items: center;
-  //justify-content: center;
+  justify-content: space-between;
   gap: 10px;
   margin-top: 100px;
+  width: 100%;
+}
+
+.detailPost {
+  width: 60%;
+  margin-right: 50px;
 }
 
 .detailContent {
