@@ -1,6 +1,7 @@
 /* TimerPage 스타일 */
 .tcontent {
   margin: 0 auto;
+  margin-top: -150px;
   padding: 20px;
   max-width: 750px;
   font-family: Arial, sans-serif;
@@ -9,7 +10,7 @@
 }
 
 .hTitle {
-  margin-top: -80px;
+  //margin-top: -150px;
   text-align: center;
   color: #555;
 }
@@ -50,7 +51,7 @@
   box-sizing: border-box;
 }
 
-.btn, .btnSave, .pagination button {
+.tBtnS, .tBtnSave, .pagination button {
   display: inline-block;
   margin: 10px 5px;
   padding: 10px 20px;
@@ -64,8 +65,12 @@
   transition: background-color 0.3s ease;
 }
 
-.tBtn:hover, .tBtnSave:hover, .pagination button:hover {
-  background-color: #0056b3;
+.tBtnSave:hover, .pagination button:hover {
+  background-color: #00468c;
+}
+
+.tBtnS.clicked {
+  background-color: #a60606;
 }
 
 .tBtnSave {
@@ -74,7 +79,25 @@
 }
 
 .tBtnSave:hover {
-  background-color: #218838;
+  background-color: #145a24;
+}
+
+.tBtnR {
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #616161;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tBtnR:hover {
+  background-color: #3c3c3c;
 }
 
 .tBookListContainer {

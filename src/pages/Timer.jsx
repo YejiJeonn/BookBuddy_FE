@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import {useTimer} from './TimerContext';
 import '../styles/CssTimer2.scss';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const TimerPage = () => {
     const {
@@ -12,14 +12,19 @@ const TimerPage = () => {
         setStopwatchTime,
     } = useTimer();
 
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const location = useLocation();
     const navigate = useNavigate();
 
+    // URL로 전달된 도서 정보
+    const {bookTitle: initialBookTitle, bookIsbn: initialBookIsbn, bookCover: initialBookCover} = location.state || {};
 
-    const [bookTitle, setBookTitle] = useState("");
-    const [bookIsbn, setBookIsbn] = useState("");
-    const [bookCover, setBookCover] = useState("");
+    const [bookTitle, setBookTitle] = useState(initialBookTitle || "");
+    const [bookIsbn, setBookIsbn] = useState(initialBookIsbn || "");
+    const [bookCover, setBookCover] = useState(initialBookCover || "");
+
+    const [startTime, setStartTime] = useState(null);
+    const [endTime, setEndTime] = useState(null);
+
     const [books, setBooks] = useState([]);
     const [page, setPage] = useState(1);
     const [query, setQuery] = useState("");
@@ -152,10 +157,13 @@ const TimerPage = () => {
                 style={{marginBottom: "10px", padding: "5px"}}
                 className="inputText"
             />
-            <button onClick={toggleStopwatch} className="tBtn">
+            <button
+                onClick={toggleStopwatch}
+                className={`tBtnS ${isStopwatchRunning ? "clicked" : ""}`} // 조건부 클래스
+            >
                 {!isStopwatchRunning ? 'Start' : 'Stop'}
             </button>
-            <button onClick={resetStopwatch} className="tBtn">
+            <button onClick={resetStopwatch} className="tBtnR">
                 Reset
             </button>
 
