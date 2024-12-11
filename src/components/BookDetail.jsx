@@ -62,8 +62,9 @@ const BookDetail = () => {
     return (
         <div>
             {error && <p>{error}</p>}
-
+            
             <div className="bdContainer">
+                <button onClick={navigateToTimer} className="timerButton">타이머 시작</button>
                 <img src={book?.cover} alt={book?.title} className="bookImg"/>
 
                 <div className="bdContent">
@@ -86,12 +87,6 @@ const BookDetail = () => {
                             <br/> {book?.description}</p>
                     </div>
                 </div>
-            </div>
-
-            <button onClick={navigateToTimer} className="timerButton">타이머 시작</button>
-            <h1 className="dbPostTitle">도서 게시판</h1>
-            <div className="detailPost">
-                <PrevPost bookIsbn={book?.isbn13}/>
             </div>
 
             <h1 className="dbPostTitle">도서 게시판</h1>

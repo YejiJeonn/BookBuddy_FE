@@ -18,6 +18,8 @@
   display: flex;
   align-items: flex-start;
   padding: 15px;
+  flex-direction: column; /* 세로 정렬 */
+  justify-content: center; /* 수직 중앙 정렬 */
 
   margin-top: -50px;
   margin-bottom: 50px;
@@ -84,8 +86,24 @@
   position: absolute;
   transform: translateX(5%);
   width: 90%;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.timerButton {
+  display: block;
+  margin-top: -30px;
+  margin-bottom: 40px;
+  margin-left: 50px;
+  padding: 10px 20px; /* 버튼 크기 */
+  font-size: 16px;
+  background-color: #EF6C00;
+  color: white;
+  border: none;
+  border-radius: 5px; /* 둥근 모서리 */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'SUITE-Regular';
 }
 
 // Library
