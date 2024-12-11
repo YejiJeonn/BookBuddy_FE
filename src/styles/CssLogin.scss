@@ -1,0 +1,66 @@
+// 제목 글씨체
+@font-face {
+  font-family: 'Freesentation-9Black';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+// 내용 글씨체
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.loginTitle {
+  font-size: 30px;
+  font-family: 'Freesentation-9Black';
+  position: absolute;
+  margin-top: -60px;
+  width: 100%;
+}
+
+.loginBlock {
+  border: solid 1px black;
+  border-radius: 10px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 50px;
+  padding-right: 50px;
+  width: 300px;
+  height: 180px;
+}
+
+.btnSignin {
+  font-family: 'SUITE-Regular';
+  width: 180px;
+  height: 30px;
+  color: white;
+  background-color: green;
+  border: solid 1px black;
+  border-radius: 5px;
+
+  display: flex; /* 제목과 버튼을 한 줄에 배치 */
+  align-items: center; /* 세로 방향 가운데 정렬 */
+  padding-left: 70px;
+}
+
+.btnSignup {
+  font-family: 'SUITE-Regular';
+  width: 180px;
+  height: 30px;
+  border: solid 1px black;
+  border-radius: 5px;
+
+  display: flex; /* 제목과 버튼을 한 줄에 배치 */
+  align-items: center; /* 세로 방향 가운데 정렬 */
+  padding-left: 65px;
+}
+
+// SignUp page
+.btnDuplicate {
+  font-family: 'SUITE-Regular';
+  font-size: 15px;
+}

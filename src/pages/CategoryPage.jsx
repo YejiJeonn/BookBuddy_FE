@@ -44,12 +44,12 @@ const CategoryPage = () => {
 
     return (
         <div>
-            <h1>{categoryId} 카테고리</h1>
+            <h1 className="cCategoryTitle">{categoryId} 카테고리</h1>
             {error && <p>{error}</p>}
-            <div className="bookListContainer">
+            <div className="cBookListContainer">
                 {products.map((product) => (
-                    <div key={product.isbn13} className="bookItem" onClick={() => handleShowDetail(product.isbn13)}>
-                        <img src={product.cover} alt={product.title} className="bookImage"/>
+                    <div key={product.isbn13} className="cBookItem" onClick={() => handleShowDetail(product.isbn13)}>
+                        <img src={product.cover} alt={product.title} className="cBookImage"/>
                         <h3>{product.title}</h3>
                         <p>{product.author}</p>
                     </div>

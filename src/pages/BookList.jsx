@@ -8,12 +8,8 @@ function BookList() {
         <div>
             <BLBestseller/>
 
-            <hr/>
-
             <BLItemNewSpecial/>
 
-            <hr/>
-            
             <BLItemNewAll/>
 
         </div>

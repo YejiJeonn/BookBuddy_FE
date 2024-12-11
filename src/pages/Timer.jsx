@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {useTimer} from './TimerContext';
-import '../styles/CssTimer.scss';
+import '../styles/CssTimer2.scss';
 import {useNavigate} from "react-router-dom";
 
 const TimerPage = () => {
@@ -49,7 +49,7 @@ const TimerPage = () => {
     };
 
     const saveReadingTime = async () => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('accessToken');
         const userId = localStorage.getItem('userId');
         const startDate = startTime ? startTime.toISOString() : null;
         const endDate = endTime ? endTime.toISOString() : null;
@@ -128,11 +128,11 @@ const TimerPage = () => {
     };
 
     return (
-        <div className="content">
+        <div className="tcontent">
             {/*기록 측정 시 유의 사항*/}
             <div>
-                <h2>유의사항</h2>
-                <p>
+                <h2 className="hText">유의사항</h2>
+                <p className="pText">
                     페이지 이동 시 진행된 타이머 혹은 스톱워치의 시간은 일시적으로 저장되지만<br/>
                     다시 시작하게되면 <strong>초기화</strong>됩니다. <br/>
                     독서 기록 중에는 페이지를 이동하지 마시고 독서에만 집중해주세요. <br/>
@@ -140,7 +140,7 @@ const TimerPage = () => {
                 </p>
             </div>
 
-            <h1>Stopwatch</h1>
+            <h1 className="hText">Stopwatch</h1>
             <div className="timerDisplay">
                 <span>{formatTime(stopwatchTime)}</span>
             </div>
@@ -150,16 +150,17 @@ const TimerPage = () => {
                 onChange={(e) => setBookTitle(e.target.value)}
                 placeholder="도서 제목"
                 style={{marginBottom: "10px", padding: "5px"}}
+                className="inputText"
             />
-            <button onClick={toggleStopwatch} className="btn">
+            <button onClick={toggleStopwatch} className="tBtn">
                 {!isStopwatchRunning ? 'Start' : 'Stop'}
             </button>
-            <button onClick={resetStopwatch} className="btn">
+            <button onClick={resetStopwatch} className="tBtn">
                 Reset
             </button>
 
             <div style={{marginTop: '30px'}}>
-                <button onClick={saveReadingTime} className="btnSave">
+                <button onClick={saveReadingTime} className="tBtnSave">
                     저장
                 </button>
             </div>
@@ -172,17 +173,18 @@ const TimerPage = () => {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="검색어를 입력하세요"
+                        className="inputText"
                     />
                     <button type="submit">검색</button>
                 </form>
 
                 <div className="bookListContainer">
                     {books.map((book) => (
-                        <div key={book.itemId} className="bookItem"
+                        <div key={book.itemId} className="tBookItem"
                              onClick={() => handleBookClick(book.title, book.isbn13, book.cover)}>
-                            <img src={book.cover} alt={book.title} className="bookImage"/>
+                            <img src={book.cover} alt={book.title} className="tBookImage"/>
                             <h3>{book.title}</h3>
-                            <p>{book.author}</p>
+                            <p className="pText">{book.author}</p>
                         </div>
                     ))}
                 </div>

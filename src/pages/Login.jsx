@@ -1,33 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-
-const styles = {
-    loginBlock: {
-        border: 'solid 1px black',
-        borderRadius: '10px',
-        paddingTop: '40px',
-        paddingBottom: '40px',
-        paddingLeft: '50px',
-        paddingRight: '50px',
-        width: 300,
-        height: 180,
-    },
-    btnSignin: {
-        width: '180px',
-        height: '25px',
-        color: 'white',
-        backgroundColor: 'green',
-        border: 'solid 1px black',
-        borderRadius: '5px',
-    },
-    btnSignup: {
-        width: '180px',
-        height: '25px',
-        border: 'solid 1px black',
-        borderRadius: '5px',
-    },
-};
+import "../styles/CssLogin.scss"
 
 function Login() {
 
@@ -70,7 +44,7 @@ function Login() {
             alert("로그인 실패");
             console.error('Error sending data: ', error);
         }
-        
+
     };
 
     const handleSignUp = () => {
@@ -80,9 +54,9 @@ function Login() {
     return (
         <div>
             <div align="center">
-                <h3>로그인</h3>
+                <h1 className="loginTitle">로그인</h1>
                 <form onSubmit={handleSubmit}>
-                    <div style={styles.loginBlock}>
+                    <div className="loginBlock">
                         <table>
                             <tbody>
                             <tr align="center">
@@ -108,7 +82,7 @@ function Login() {
                             </tr>
                             <tr align="center">
                                 <td colSpan="2">
-                                    <button type="submit" className="btnSignin" style={styles.btnSignin}> 로그인</button>
+                                    <button type="submit" className="btnSignin"> 로그인</button>
                                 </td>
                             </tr>
                             <tr height="5px">
@@ -116,7 +90,7 @@ function Login() {
                             </tr>
                             <tr align="center">
                                 <td colSpan="2">
-                                    <button type="button" className="btnSignup" style={styles.btnSignup}
+                                    <button type="button" className="btnSignup"
                                             onClick={handleSignUp}> 회원가입
                                     </button>
                                 </td>

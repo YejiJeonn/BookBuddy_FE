@@ -1,18 +1,102 @@
-.container {
-  padding: 20px;
+// 제목 글씨체
+@font-face {
+  font-family: 'Freesentation-9Black';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+// 내용 글씨체
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.bdContainer {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding: 15px;
+
+  margin-top: -50px;
+  margin-bottom: 50px;
+}
+
+.bdTitle {
+  font-size: 35px;
+  font-weight: bold;
+  font-family: 'Freesentation-9Black';
+  max-width: 40ch;
+}
+
+.titleNbtn {
+  display: flex; /* 제목과 버튼을 한 줄에 배치 */
+  align-items: center; /* 세로 방향 가운데 정렬 */
   justify-content: space-between;
-  gap: 10px;
-  margin-top: 100px;
+  height: 40px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
-.detailPost {
-  width: 60%;
-  margin-right: 50px;
+.btnToggle {
+  margin-top: 45px;
+  margin-left: 50px;
+}
+
+// 도서 이미지
+.bookImg {
+  width: 350px;
+  margin-left: 50px;
+}
+
+.conTitle {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+// 책 정보
+.bdContent {
+  display: block;
+  position: absolute;
+  margin-left: 450px;
+  font-size: 17px;
+  line-height: 1.2;
+  word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
+  font-family: 'SUITE-Regular';
 }
 
 .detailContent {
+  margin-top: 20px;
+}
+
+.dbPostTitle {
+  font-size: 30px;
+  font-family: 'Freesentation-9Black';
+  position: absolute;
+  transform: translateX(45%);
+  width: 100%;
+}
+
+// 게시글
+.detailPost {
+  font-family: 'SUITE-Regular';
+  position: absolute;
+  transform: translateX(5%);
+  width: 90%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+// Library
+
+.card-list {
+  margin-right: 10px;
+}
+
+.card {
+  margin-top: 30px;
+  width: 200px;
+  height: 500px;
   margin-left: 20px;
 }

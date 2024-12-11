@@ -40,7 +40,7 @@ const PrevContents = ({category}) => {
     return (
         <div>
             <div className="headerContainer">
-                <h1 style={{marginLeft: "20px"}}>{category.title}</h1>
+                <h1 className="categoryTitle">{category.title}</h1>
                 <button
                     onClick={() => handleCategoryClick(category.id)}
                     className="btnMore"
@@ -57,7 +57,7 @@ const PrevContents = ({category}) => {
                     <div key={product.isbn13} onClick={() => handleShowDetail(product.isbn13)}>
                         <div className="bookItem">
                             <img src={product.cover} alt={product.title} className="bookImage"/>
-                            <h3>{product.title}</h3>
+                            <h3 style={{fontWeight: 'bold'}}>{product.title}</h3>
                             <p>{product.author}</p>
                         </div>
                     </div>

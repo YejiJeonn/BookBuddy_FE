@@ -24,14 +24,16 @@
 // 메뉴 아이콘을 기준으로 menu lists가 배치되도록 position:absolute를 지정했습니다
 .menuLists {
   position: absolute; // 화면 왼쪽에 고정
-  top: 27px;
-  left: 0;
+  top: 30px;
   height: 100vh; // 화면 전체 높이
   width: 200px;
   background-color: white;
   transition: transform 0.3s ease;
-  transform: translateX(-60px); // 초기 위치 설정 (숨김)
+  transform: translateX(-140px); // 초기 위치 설정 (숨김)
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  list-style-type: none; /* 기본 불릿 제거 */
+  padding-left: 0;
+  text-align: center;
 
   &.show {
     transform: translateX(0);

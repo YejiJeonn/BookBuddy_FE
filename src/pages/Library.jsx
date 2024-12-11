@@ -1,6 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import '../styles/CssBookDetail.scss';
 
 const Library = () => {
     const userId = localStorage.getItem('userId');
@@ -22,24 +23,23 @@ const Library = () => {
             console.error("Error fetching books:", err);
             setError("도서 데이터를 불러오는 데 실패했습니다."); // 에러 처리
         }
-
-        console.log(books[0]);
     };
 
     useEffect(() => {
         fetchBooks(); // 컴포넌트가 마운트될 때 데이터 가져오기
     }, []);
 
-    const handleShowDetail = (isbn13) => {
-        navigate(`/book-detail/${isbn13}`);
+    const handleShowDetail = (bookIsbn) => {
+        console.log(bookIsbn);
+        navigate(`/book-detail/${bookIsbn}`);
     };
 
     return (
         <div className="card-list">
-            <h1>내 서재 페이지</h1><br/>
+            <h2 className="dbPostTitle" style={{marginTop: '-50px'}}>내 서재 페이지</h2>
             {error && <p className="error">{error}</p>} {/* 에러 메시지 표시 */}
             {books.map((book) => (
-                <div className="card" key={book.isbn13} onClick={() => handleShowDetail(book.isbn13)}>
+                <div className="card" key={book.isbn} onClick={() => handleShowDetail(book.isbn)}>
                     <img
                         src={book.cover} // API 호출을 통해 받아온 cover 이미지
                         alt={book.title || "No Title"}
