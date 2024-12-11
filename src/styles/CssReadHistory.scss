@@ -1,4 +1,32 @@
 /* ReadHistory.css */
+// 제목 글씨체
+@font-face {
+  font-family: 'Freesentation-9Black';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+// 내용 글씨체
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.rhTitle {
+  font-size: 25px;
+  margin-top: -20px;
+  margin-left: 20px;
+  display: flex; /* 내부 요소 정렬 */
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-5%);
+  font-family: 'Freesentation-9Black';
+  width: 100%;
+}
 
 .history-container {
   padding: 20px;

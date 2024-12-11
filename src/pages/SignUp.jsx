@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import "../styles/CssLogin.scss"
 
 const styles = {
     loginBlock: {
@@ -9,7 +10,7 @@ const styles = {
         paddingBottom: '40px',
         paddingLeft: '50px',
         paddingRight: '50px',
-        width: 300,
+        width: '80%',
         height: '100%',
     },
     btnSignup: {
@@ -144,7 +145,7 @@ function SignUp() {
     return (
         <div>
             <div align="center">
-                <h3>회원가입</h3>
+                <h1 className="loginTitle">회원가입</h1>
                 <form onSubmit={handleSubmit}>
                     <div style={styles.loginBlock}>
                         <table>
@@ -155,7 +156,8 @@ function SignUp() {
                                     <input type="text" name="id" value={userId} onChange={handleChange} size="30"/>
                                 </td>
                                 <td>
-                                    <button type="button" onClick={handleIdDuplicate}>중복확인</button>
+                                    <button type="button" onClick={handleIdDuplicate} className="btnDuplicate">중복확인
+                                    </button>
                                 </td>
                             </tr>
 
@@ -200,7 +202,9 @@ function SignUp() {
                                            size="30"/>
                                 </td>
                                 <td>
-                                    <button type="button" onClick={handleNicknameDuplicate}>중복확인</button>
+                                    <button type="button" onClick={handleNicknameDuplicate}
+                                            className="btnDuplicate">중복확인
+                                    </button>
                                 </td>
                             </tr>
 
@@ -249,8 +253,9 @@ function SignUp() {
                             </tr>
                             <tr align="center">
                                 <td colSpan="3">
-                                    <input type="submit" value="회원가입" className="btnSignin"
-                                           style={styles.btnSignup}/>
+                                    <button type="submit" className="btnSignin" style={{paddingLeft: '60px'}}>
+                                        회원가입
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>

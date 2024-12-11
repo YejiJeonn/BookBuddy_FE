@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import ReadHistory from "./ReadHistory";
 
 function MyPage() {
     const {user, setUser} = useContext(AuthContext);
@@ -72,7 +73,8 @@ function MyPage() {
             <hr style={{marginTop: "30px", marginBottom: "30px"}}/>
 
             <div onClick={handleHistoryClick}>
-                <h3>나의 독서 기록</h3>
+                <br/><br/><br/><br/>
+                <ReadHistory/>
             </div>
         </div>
     );

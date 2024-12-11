@@ -1,0 +1,45 @@
+// 내용 글씨체
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.searchContainer {
+  display: flex; //입력 필드와 버튼을 나란히 정렬
+  align-items: center; // 수직 가운데 정렬
+  gap: 10px; // 입력 필드와 버튼 사이 간격
+  margin-top: 30px;
+}
+
+.bookSearchText {
+  display: block;
+  width: 300px;
+  border: none;
+  border-bottom: 2px solid white; /* 하단 흰색 선 */
+  background: none; /* 배경 제거 */
+  color: white; /* 글자 색상 흰색 */
+  outline: none;
+  padding: 5px 0;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  font-family: 'SUITE-Regular';
+}
+
+.searchButton {
+  padding: 5px 15px; // 버튼 크기 설정
+  font-size: 17px;
+  border: none;
+  background-color: #007BFF; // 버튼 색상
+  color: white;
+  cursor: pointer;
+  border-radius: 5px; // 버튼 모서리를 둥글게
+  transition: background-color 0.3s ease;
+  font-family: 'SUITE-Regular';
+}
+
+.searchButton:hover {
+  background-color: #0056b3; // 버튼 호버 시 색상
+}
+

@@ -9,10 +9,12 @@ const BookDetail = () => {
     const {bookIsbn} = useParams();
     const [book, setBook] = useState(null);
     const [error, setError] = useState(null);
+    const [isBookSaved, setIsBookSaved] = useState(false); // 토글 상태 관리
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchBookDetail();
+        checkIfBookExists();
     }, [bookIsbn]);
 
     // 비동기 함수를 정의하고 즉시 호출하는 방식 사용
@@ -28,28 +30,75 @@ const BookDetail = () => {
         }
     };
 
+    // 저장 여부 확인
+    const checkIfBookExists = async () => {
+        const token = localStorage.getItem("accessToken");
+        try {
+            const response = await axios.get("http://localhost:8080/api/library/books", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            // 응답에서 현재 도서 ISBN이 존재하는지 확인
+            const exists = response.data.some((savedBook) => savedBook.isbn === bookIsbn);
+            setIsBookSaved(exists); // 저장 여부 설정
+        } catch (error) {
+            console.error("Error checking book existence:", error);
+        }
+    };
+
+    // 타이머 페이지 이동
+    const navigateToTimer = () => {
+        navigate('/timer', {
+            state: {
+                bookTitle: book?.title,
+                bookIsbn: book?.isbn13,
+                bookCover: book?.cover,
+            },
+        });
+    };
 
     return (
         <div>
-            <h2>{book?.title}</h2>
             {error && <p>{error}</p>}
-            <div className="container">
-                <img src={book?.cover} alt={book?.title} style={{width: "300px"}}/>
 
-                <div className="detailPost">
-                    <BtnToggle isbn13={book?.isbn13} title={book?.title} author={book?.author}
-                               publisher={book?.publisher} pubDate={book?.pubDate} cover={book?.cover}/>
-                    <div>
-                        <PrevPost bookIsbn={book?.isbn13}/>
+            <div className="bdContainer">
+                <img src={book?.cover} alt={book?.title} className="bookImg"/>
+
+                <div className="bdContent">
+                    <div className="titleNbtn">
+                        <h2 className="bdTitle">{book?.title}</h2>
+                        <div className="btnToggle">
+                            <BtnToggle isbn13={book?.isbn13} title={book?.title} author={book?.author}
+                                       publisher={book?.publisher} pubDate={book?.pubDate} cover={book?.cover}
+                                       initialIsOn={isBookSaved} // 저장 여부 전달
+                            />
+                        </div>
+                    </div>
+
+                    <div className="detailContent">
+                        <p style={{marginTop: '50px'}}><strong className="conTitle">저자</strong> <br/> {book?.author}</p>
+                        <p><strong className="conTitle">출판사</strong> <br/> {book?.publisher}</p>
+                        <p><strong className="conTitle">출판일</strong> <br/> {book?.pubDate}</p>
+                        <p><strong className="conTitle">회원 리뷰 평점</strong> <br/> {book?.customerReviewRank}</p>
+                        <p style={{maxWidth: '75ch'}}><strong className="conTitle">설명</strong>
+                            <br/> {book?.description}</p>
                     </div>
                 </div>
             </div>
-            <div className="detailContent">
-                <p><strong>저자: </strong> {book?.author}</p>
-                <p><strong>출판사: </strong> {book?.publisher}</p>
-                <p><strong>출판일: </strong> {book?.pubDate}</p>
-                <p><strong>회원 리뷰 평점: </strong> {book?.customerReviewRank}</p>
-                <p><strong>설명: </strong> {book?.description}</p>
+
+            <button onClick={navigateToTimer} className="timerButton">타이머 시작</button>
+            <h1 className="dbPostTitle">도서 게시판</h1>
+            <div className="detailPost">
+                <PrevPost bookIsbn={book?.isbn13}/>
+            </div>
+
+            <h1 className="dbPostTitle">도서 게시판</h1>
+            <div className="detailPost">
+                <div>
+                    <PrevPost bookIsbn={book?.isbn13}/>
+                </div>
             </div>
         </div>
     );

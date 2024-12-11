@@ -73,9 +73,9 @@ const PostListPage = () => {
 
     return (
         <div>
-            <div className="headerContainer">
-                <h1>게시글 목록</h1>
-                <button onClick={handleWritePost}>글쓰기</button>
+            <h1 className="postListTitle">게시글 목록</h1>
+            <div className="containerBtnPostList">
+                <button className="btnPostList" onClick={handleWritePost}>글쓰기</button>
             </div>
 
             {/* 에러 메시지 표시 */}

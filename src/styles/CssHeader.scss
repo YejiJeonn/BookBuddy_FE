@@ -1,0 +1,78 @@
+@font-face {
+  font-family: 'Cafe24Decobox';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decobox.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.hContainer {
+  background-image: linear-gradient(to bottom right, #FFAB2E, #FFD873);
+  width: 100%; /* 전체 너비 */
+  height: 70px; /* 고정 높이 */
+  display: flex; /* 자식 요소를 플렉스 정렬 */
+  align-items: center; /* 세로 가운데 정렬 */
+  justify-content: space-between; /* 자식 요소들을 양쪽 끝으로 정렬 */
+  padding: 0 20px; /* 양쪽 여백 */
+  position: relative; /* 헤더를 페이지 상단에 고정 */
+  top: -100px; /* 화면 상단에 위치 */
+  z-index: 1000; /* 다른 요소 위에 표시 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 상단 그림자 */
+  gap: 10px;
+  margin-top: 100px;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.titleName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(25%); // 정확히 중앙 배치
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.icBookBuddy {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  left: 10px;
+  margin-top: -5px;
+  background: no-repeat center center;
+  background-size: cover;
+  border: none;
+  padding: 0;
+}
+
+.title {
+  color: black;
+  font-size: 30px;
+  margin: 0;
+  font-family: 'Cafe24Decobox';
+}
+
+.menuIcon {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 5%; /* 요소를 컨테이너의 오른쪽에 배치 */
+  margin-top: 50px;
+}
+
+.search {
+  display: flex; /* 내부 요소 정렬 */
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); // 정확히 중앙 배치
+  margin-top: 10px;
+}
+
+.txtSearch {
+  width: 200px;
+  height: 30px;
+}

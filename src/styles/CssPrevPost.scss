@@ -2,7 +2,6 @@
 .prev-post-slider {
   position: relative;
   width: 100%;
-  //max-width: 300px;
   margin: 0 auto;
   overflow: hidden;
   background-color: #f9f9f9;
@@ -11,7 +10,7 @@
 }
 
 .post-container {
-  width: 95%;
+  width: 100%;
 }
 
 /* 슬라이더 */
@@ -29,8 +28,8 @@
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
 /* 슬라이드 제목 */
@@ -72,6 +71,19 @@
   font-size: 1rem;
   color: #999;
   padding: 20px;
+}
+
+.ppbtn {
+  display: flex; /* 버튼 정렬을 위한 플렉스 컨테이너 설정 */
+  justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  margin-bottom: 10px; /* 컨테이너와 아래 요소 간 여백 추가 */
+}
+
+.ppBtnMore {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'SUITE-Regular';
 }
 
 button {

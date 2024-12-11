@@ -2,66 +2,51 @@ import React, {useEffect, useState} from "react";
 import "../styles/CssBtnToggle.scss";
 import axios from "axios";
 
-const BtnToggle = ({isbn13, title, author, publisher, pubDate, cover}) => {
-    const [isOn, setIsOn] = useState(false);
+const BtnToggle = ({isbn13, title, author, publisher, pubDate, cover, initialIsOn}) => {
+    const [isOn, setIsOn] = useState(initialIsOn);
 
     useEffect(() => {
-        const checkIfBookExists = async () => {
-            const token = localStorage.getItem("accessToken");
-            try {
-                const response = await axios.get(
-                    `http://localhost:8080/api/library/check/${isbn13}`,
+        setIsOn(initialIsOn); // prop 값에 따라 상태 업데이트
+    }, [initialIsOn]);
+
+    const toggleHandler = async () => {
+        const token = localStorage.getItem('accessToken');
+        const userId = localStorage.getItem('userId');
+        const nickname = localStorage.getItem('nickname');
+
+        try {
+            if (!isOn) {
+                // 도서 저장 요청
+                await axios.post(
+                    "http://localhost:8080/api/library/save",
+                    {
+                        userId,
+                        nickname,
+                        title,
+                        isbn: isbn13,
+                        author,
+                        publisher,
+                        pubDate,
+                        cover,
+                    },
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
                     }
                 );
-                if (response.data.exists) {
-                    setIsOn(true); // 도서가 이미 저장된 경우 버튼 활성화
-                }
-            } catch (error) {
-                console.error(error.response?.data?.message || "오류가 발생했습니다.");
-            }
-        };
-
-        checkIfBookExists();
-    }, [isbn13]);
-
-    const toggleHandler = async () => {
-        const token = localStorage.getItem('accessToken');
-        const userId = localStorage.getItem('userId');
-        const nickname = localStorage.getItem('nickname');
-        console.log("1" + token);
-        console.log("isbn" + isbn13);
-
-        try {
-            if (!isOn) {
-                // DB에 회원 id와 도서 isbn 저장
-                const response = await axios.post("http://localhost:8080/api/library/save", {
-                    userId: userId,
-                    nickname: nickname,
-                    title: title,
-                    isbn: isbn13,
-                    author: author,
-                    publisher: publisher,
-                    pubDate: pubDate,
-                    cover: cover,
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                console.log("도서가 저장되었습니다: ", response.data);
+                console.log("도서가 저장되었습니다.");
             } else {
-                // DB에서 회원 id와 도서 isbn 삭제
-                const response = await axios.delete(`/api/library/delete/${isbn13}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
+                // 도서 삭제 요청
+                await axios.delete(
+                    `http://localhost:8080/api/library/delete/${isbn13}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
                     }
-                });
-                console.log("도서가 삭제되었습니다: ", response.data);
+                );
+                console.log("도서가 삭제되었습니다.");
             }
             setIsOn(!isOn);
         } catch (error) {

@@ -35,6 +35,7 @@ const PrevPost = ({bookIsbn}) => {
         fetchPosts();
     }, [bookIsbn]);
 
+    // 등록된 게시글만큼 슬라이딩 처리
     useEffect(() => {
         if (posts.length > 0) {
             const interval = setInterval(() => {
@@ -53,19 +54,28 @@ const PrevPost = ({bookIsbn}) => {
 
     return (
         <div>
-            <button onClick={() => handleShowDetail()}>더보기</button>
+            <div className="ppbtn">
+                <button className="ppBtnMore" onClick={() => handleShowDetail()}>더보기</button>
+            </div>
             <div className="prev-post-slider" onClick={() => handleShowDetail()}>
                 {isLoading ? (
                     <p className="loading-message">게시글을 불러오는 중입니다.</p>
                 ) : posts.length > 0 ? (
                     <div className="post-container">
-                        <div className="slider" style={{transform: `translateX(-${currentIndex * 100}%)`,}}>
+                        <div className="slider"
+                             style={{
+                                 transform: `translateX(-${currentIndex * 100}%)`, // 50% 단위로 이동
+                             }}>
                             {posts.map((post, index) => (
                                 <div className="slide" key={index}>
-                                    <h3 className="slide-title">{posts[currentIndex].title}</h3>
-                                    <p className="slide-content">{posts[currentIndex].content}</p>
-                                    <p className="slide-author">{posts[currentIndex].nickname}</p>
-                                    <span className="index">- {currentIndex + 1} -</span>
+                                    {posts[currentIndex] && ( // 유효성 검사 추가
+                                        <>
+                                            <h3 className="slide-title">{posts[currentIndex].title}</h3>
+                                            <p className="slide-content">{posts[currentIndex].content}</p>
+                                            <p className="slide-author">{posts[currentIndex].nickname}</p>
+                                            <span className="index">- {currentIndex + 1} -</span>
+                                        </>
+                                    )}
                                 </div>
                             ))}
                         </div>

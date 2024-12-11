@@ -103,7 +103,7 @@ function ReadHistory() {
 
     return (
         <div className="history-container">
-            <h1>독서 기록 목록</h1>
+            <h1 className="rhTitle" style={{marginTop: '-80px'}}>독서 기록 목록</h1>
             {error && <p style={{color: "red"}}>{error}</p>}
 
             {/* 날짜별 총 독서 시간 그래프 */}
