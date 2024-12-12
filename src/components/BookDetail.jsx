@@ -62,7 +62,7 @@ const BookDetail = () => {
     return (
         <div>
             {error && <p>{error}</p>}
-            
+
             <div className="bdContainer">
                 <button onClick={navigateToTimer} className="timerButton">타이머 시작</button>
                 <img src={book?.cover} alt={book?.title} className="bookImg"/>
@@ -82,7 +82,11 @@ const BookDetail = () => {
                         <p style={{marginTop: '50px'}}><strong className="conTitle">저자</strong> <br/> {book?.author}</p>
                         <p><strong className="conTitle">출판사</strong> <br/> {book?.publisher}</p>
                         <p><strong className="conTitle">출판일</strong> <br/> {book?.pubDate}</p>
-                        <p><strong className="conTitle">회원 리뷰 평점</strong> <br/> {book?.customerReviewRank}</p>
+                        {/*<p><strong className="conTitle">회원 리뷰 평점</strong> <br/> {book?.customerReviewRank}</p>*/}
+                        <p><strong className="conTitle">회원 리뷰 평점</strong>
+                            <br/>
+                            
+                        </p>
                         <p style={{maxWidth: '75ch'}}><strong className="conTitle">설명</strong>
                             <br/> {book?.description}</p>
                     </div>
